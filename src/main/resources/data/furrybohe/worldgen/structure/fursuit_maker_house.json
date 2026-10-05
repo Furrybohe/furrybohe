@@ -1,10 +1,10 @@
 {
   "type": "minecraft:jigsaw",
-  "biomes": "#yourmod:has_structure/your_house",
+  "biomes": "#furrybohe:has_structure/fursuit_maker_house",
   "step": "surface_structures",
   "spawn_overrides": {},
   "terrain_adaptation": "beard_thin",
-  "start_pool": "yourmod:your_house/start_pool",
+  "start_pool": "furrybohe:fursuit_maker_house/start_pool",
   "size": 1,
   "start_height": {
     "absolute": 0

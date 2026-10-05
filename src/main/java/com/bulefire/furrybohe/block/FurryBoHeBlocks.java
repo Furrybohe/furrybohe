@@ -25,7 +25,7 @@ public class FurryBoHeBlocks {
     public static final Block RESIN_COLLECTOR = FurryBoHeBlocksRegister.RESIN_COLLECTOR_REGISTER.get();
     
     /** 毛布制作台【参考原版工作台 CRAFTING_TABLE / 织布机 LOOM：木质工作台】 */
-    public static final Block FUR_CRAFTING_TABLE = FurryBoHeBlocksRegister.FUR_CRAFTING_TABLE.get();
+    public static final Block FUR_CRAFTING_TABLE = FurryBoHeBlocksRegister.FUR_CRAFTING_TABLE_REGISTER.get();
     
     /** 结晶台【参考原版附魔台 ENCHANTING_TABLE：需镐、发光、高爆炸抗性】 */
     public static final Block CRYSTAL_TABLE = FurryBoHeBlocksRegister.CRYSTAL_TABLE_REGISTER.get();

@@ -17,7 +17,7 @@ public class FurryBoHePoiTypesRegister {
             POI_TYPES_REGISTER.register(
                     "fursuit_maker_poi", () ->
                             new PoiType(
-                                    Set.of(FurryBoHeBlocks.FURSUIT_WORKSTATION.defaultBlockState()),
+                                    Set.of(FurryBoHeBlocksRegister.FURSUIT_WORKSTATION_REGISTER.get().defaultBlockState()),
                                     1,
                                     5
                             )
@@ -28,7 +28,7 @@ public class FurryBoHePoiTypesRegister {
             POI_TYPES_REGISTER.register(
                     "fur_trader_poi", () ->
                             new PoiType(
-                                    Set.of(FurryBoHeBlocks.FUR_CRAFTING_TABLE.defaultBlockState()),
+                                    Set.of(FurryBoHeBlocksRegister.FUR_CRAFTING_TABLE_REGISTER.get().defaultBlockState()),
                                     1,
                                     5
                             )

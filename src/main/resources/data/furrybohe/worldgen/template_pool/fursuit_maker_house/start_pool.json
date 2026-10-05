@@ -1,11 +1,11 @@
 {
-  "name": "yourmod:your_house/start_pool",
+  "name": "furrybohe:fursuit_maker_house/start_pool",
   "fallback": "minecraft:empty",
   "elements": [
     {
       "weight": 1,
       "element": {
-        "location": "yourmod:your_house",
+        "location": "furrybohe:fursuit_maker_house",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
