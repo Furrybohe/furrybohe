@@ -3,7 +3,7 @@
 
   "block.furrybohe.fursuit_workstation": "兽装工作站",
   "block.furrybohe.resin_collector": "树脂收集器",
-  "block.furrybohe.cloth_crafting_table": "毛布制作台",
+  "block.furrybohe.fur_crafting_table": "毛布制作台",
   "block.furrybohe.crystal_table": "结晶台",
   "block.furrybohe.drying_rack": "晾衣架",
   "block.furrybohe.fursuit_part_display": "各色兽装部位",
@@ -13,26 +13,26 @@
   "item.furrybohe.shape_resin": "定型树脂",
   "item.furrybohe.resin_fragment": "树脂碎片",
   "item.furrybohe.carved_resin_fragment": "雕刻树脂碎片",
-  "item.furrybohe.bottle_of_resin": "一瓶树脂",
+  "item.furrybohe.bottle_of_resin": "瓶装树脂",
   "item.furrybohe.cotton": "棉花",
   "item.furrybohe.cotton_seeds": "棉花种子",
 
-  "item.furrybohe.white_cloth": "白色毛布",
-  "item.furrybohe.orange_cloth": "橙色毛布",
-  "item.furrybohe.magenta_cloth": "品红色毛布",
-  "item.furrybohe.light_blue_cloth": "淡蓝色毛布",
-  "item.furrybohe.yellow_cloth": "黄色毛布",
-  "item.furrybohe.lime_cloth": "黄绿色毛布",
-  "item.furrybohe.pink_cloth": "粉红色毛布",
-  "item.furrybohe.gray_cloth": "灰色毛布",
-  "item.furrybohe.light_gray_cloth": "淡灰色毛布",
-  "item.furrybohe.cyan_cloth": "青色毛布",
-  "item.furrybohe.purple_cloth": "紫色毛布",
-  "item.furrybohe.blue_cloth": "蓝色毛布",
-  "item.furrybohe.brown_cloth": "棕色毛布",
-  "item.furrybohe.green_cloth": "绿色毛布",
-  "item.furrybohe.red_cloth": "红色毛布",
-  "item.furrybohe.black_cloth": "黑色毛布",
+  "item.furrybohe.white_fur": "白色毛布",
+  "item.furrybohe.orange_fur": "橙色毛布",
+  "item.furrybohe.magenta_fur": "品红色毛布",
+  "item.furrybohe.light_blue_fur": "淡蓝色毛布",
+  "item.furrybohe.yellow_fur": "黄色毛布",
+  "item.furrybohe.lime_fur": "黄绿色毛布",
+  "item.furrybohe.pink_fur": "粉红色毛布",
+  "item.furrybohe.gray_fur": "灰色毛布",
+  "item.furrybohe.light_gray_fur": "淡灰色毛布",
+  "item.furrybohe.cyan_fur": "青色毛布",
+  "item.furrybohe.purple_fur": "紫色毛布",
+  "item.furrybohe.blue_fur": "蓝色毛布",
+  "item.furrybohe.brown_fur": "棕色毛布",
+  "item.furrybohe.green_fur": "绿色毛布",
+  "item.furrybohe.red_fur": "红色毛布",
+  "item.furrybohe.black_fur": "黑色毛布",
 
   "item.furrybohe.carving_knife": "雕刻刀",
   "item.furrybohe.needle_box": "针线盒",
@@ -85,7 +85,7 @@
   "item.furrybohe.fursuit_bone_skull": "骨头头骨",
   "item.furrybohe.fursuit_eyes": "兽装眼睛",
   "item.furrybohe.fursuit_tongue": "舌头",
-  "item.furrybohe.fursuit_head": "兽装头",
+  "item.furrybohe.fursuit_head": "兽装头部",
 
   "item.furrybohe.fursuit_claw_pattern": "兽爪版型",
   "item.furrybohe.fursuit_finger_pad": "肉垫（手指）",
@@ -94,7 +94,7 @@
   "item.furrybohe.fursuit_claw_pair": "一对兽爪",
 
   "item.furrybohe.fursuit_tail_pattern": "尾巴版型",
-  "item.furrybohe.fursuit_tail": "兽装尾",
+  "item.furrybohe.fursuit_tail": "兽装尾部",
 
   "item.furrybohe.fursuit_sponge_foot_sole": "海绵兽脚底",
   "item.furrybohe.fursuit_resin_foot_sole": "树脂兽脚底",
@@ -106,8 +106,10 @@
   "item.furrybohe.fursuit_curved_leg": "兽装曲腿",
 
   "item.furrybohe.fursuit_body_with_claws": "身体（含爪子）",
-  "item.furrybohe.fursuit_leg_with_tail": "腿（含尾）",
+  "item.furrybohe.fursuit_leg_with_tail": "腿部（含尾）",
   "item.furrybohe.fursuit_pseudo_full_body": "伪全身体",
 
-  "item.furrybohe.cat_energy_collector": "猫猫收集器"
+  "item.furrybohe.cat_energy_collector": "猫猫收集器",
+
+  "tab.furrybohe.main_tab": "FurryBoHe"
 }
