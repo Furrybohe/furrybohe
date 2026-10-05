@@ -1,8 +1,8 @@
 package com.bulefire.furrybohe;
 
-import com.bulefire.furrybohe.register.FurryBoHeBlocksRegister;
-import com.bulefire.furrybohe.register.FurryBoHeCreativeTabsRegister;
-import com.bulefire.furrybohe.register.FurryBoHeItemsRegister;
+import com.bulefire.furrybohe.block.FurryBoHeBlocks;
+import com.bulefire.furrybohe.item.FurryBoHeItems;
+import com.bulefire.furrybohe.register.*;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
@@ -50,6 +50,8 @@ public class FurryBoHe {
         FurryBoHeItemsRegister.ITEMS_REGISTER.register(modEventBus);
         FurryBoHeBlocksRegister.BLOCKS_REGISTER.register(modEventBus);
         FurryBoHeCreativeTabsRegister.TABS_REGISTER.register(modEventBus);
+        FurryBoHePoiTypesRegister.POI_TYPES_REGISTER.register(modEventBus);
+        FurryBoHeVillagerProfessionRegister.PROFESSIONS_REGISTER.register(modEventBus);
         
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);

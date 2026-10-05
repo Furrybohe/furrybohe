@@ -42,7 +42,7 @@ public class FurryBoHeItemsRegister {
     /** 棉花种子注册 */
     public static final RegistryObject<Item> COTTON_SEEDS_REGISTER = register("cotton_seeds");
     /** 有色毛布注册【键为染料颜色名】 */
-    public static final Map<String, RegistryObject<Item>> COLOR_CLOTH_REGISTER = new HashMap<>(16, 1.0f);
+    public static final Map<String, RegistryObject<Item>> COLOR_FUR_REGISTER = new HashMap<>(16, 1.0f);
     
     // ================================================================
     // 工具与耗材
@@ -221,7 +221,7 @@ public class FurryBoHeItemsRegister {
     /** 树脂收集器方块物品注册 */
     public static final RegistryObject<Item> RESIN_COLLECTOR_REGISTER = register(FurryBoHeBlocksRegister.RESIN_COLLECTOR_REGISTER);
     /** 毛布制作台方块物品注册 */
-    public static final RegistryObject<Item> CLOTH_CRAFTING_TABLE_REGISTER = register(FurryBoHeBlocksRegister.CLOTH_CRAFTING_TABLE_REGISTER);
+    public static final RegistryObject<Item> FUR_CRAFTING_TABLE_REGISTER = register(FurryBoHeBlocksRegister.FUR_CRAFTING_TABLE_REGISTER);
     /** 结晶台方块物品注册 */
     public static final RegistryObject<Item> CRYSTAL_TABLE_REGISTER = register(FurryBoHeBlocksRegister.CRYSTAL_TABLE_REGISTER);
     /** 晾衣架方块物品注册 */
@@ -240,7 +240,7 @@ public class FurryBoHeItemsRegister {
     
     static  {
         for (DyeColor dyeColor : DyeColor.values())
-            COLOR_CLOTH_REGISTER.put(dyeColor.getName(), register(dyeColor.getName() + "_cloth"));
+            COLOR_FUR_REGISTER.put(dyeColor.getName(), register(dyeColor.getName() + "_fur"));
         
         for (String name : PART_SOCKET_CRYSTAL_NAMES)
             SPECIAL_CRYSTAL_REGISTER.put(name, register(name + "_crystal"));

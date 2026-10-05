@@ -2,7 +2,6 @@ package com.bulefire.furrybohe.register;
 
 import com.bulefire.furrybohe.FurryBoHe;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -35,8 +34,8 @@ public class FurryBoHeBlocksRegister {
     );
     
     /** 毛布制作台注册【参考原版工作台 CRAFTING_TABLE / 织布机 LOOM：木质工作台】 */
-    public static final RegistryObject<Block> CLOTH_CRAFTING_TABLE_REGISTER = register(
-            "cloth_crafting_table",
+    public static final RegistryObject<Block> FUR_CRAFTING_TABLE_REGISTER = register(
+            "fur_crafting_table",
             () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD).ignitedByLava())
     );
     
