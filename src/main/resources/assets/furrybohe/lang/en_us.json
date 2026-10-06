@@ -85,11 +85,11 @@
   "item.furrybohe.fursuit_tongue": "Fursuit Tongue",
   "item.furrybohe.fursuit_head": "Fursuit Head",
 
-  "item.furrybohe.fursuit_claw_pattern": "Paw Pattern",
-  "item.furrybohe.fursuit_finger_pad": "Finger Pad",
-  "item.furrybohe.fursuit_palm_pad": "Palm Pad",
-  "item.furrybohe.fursuit_claw": "Fursuit Paw",
-  "item.furrybohe.fursuit_claw_pair": "Pair of Fursuit Paws",
+  "item.furrybohe.fursuit_paw_claw_pattern": "Paw Pattern",
+  "item.furrybohe.fursuit_paw_finger_pad": "Finger Pad",
+  "item.furrybohe.fursuit_paw_palm_pad": "Palm Pad",
+  "item.furrybohe.fursuit_paw_claw": "Fursuit Paw",
+  "item.furrybohe.fursuit_paw_claw_pair": "Pair of Fursuit Paws",
 
   "item.furrybohe.fursuit_tail_pattern": "Fursuit Tail Pattern",
   "item.furrybohe.fursuit_tail": "Fursuit Tail",

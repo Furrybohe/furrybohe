@@ -165,15 +165,15 @@ public class FurryBoHeItemsRegister {
     // ================================================================
     
     /** 兽爪版型注册 */
-    public static final RegistryObject<Item> FURSUIT_CLAW_PATTERN_REGISTER = register("fursuit_claw_pattern");
+    public static final RegistryObject<Item> FURSUIT_PAW_CLAW_PATTERN_REGISTER = register("fursuit_paw_claw_pattern");
     /** 肉垫（手指）注册 */
-    public static final RegistryObject<Item> FURSUIT_FINGER_PAD_REGISTER = register("fursuit_finger_pad");
+    public static final RegistryObject<Item> FURSUIT_PAW_FINGER_PAD_REGISTER = register("fursuit_paw_finger_pad");
     /** 肉垫（手掌）注册 */
-    public static final RegistryObject<Item> FURSUIT_PALM_PAD_REGISTER = register("fursuit_palm_pad");
+    public static final RegistryObject<Item> FURSUIT_PAW_PALM_PAD_REGISTER = register("fursuit_paw_palm_pad");
     /** 兽爪注册【单只】 */
-    public static final RegistryObject<Item> FURSUIT_CLAW_REGISTER = register("fursuit_claw");
+    public static final RegistryObject<Item> FURSUIT_PAW_CLAW_REGISTER = register("fursuit_paw_claw");
     /** 一对兽爪注册【可穿戴，2兽爪合成】 */
-    public static final RegistryObject<Item> FURSUIT_CLAW_PAIR_REGISTER = register("fursuit_claw_pair");
+    public static final RegistryObject<Item> FURSUIT_PAW_CLAW_PAIR_REGISTER = register("fursuit_paw_claw_pair");
     
     // ================================================================
     // 兽装部件——尾巴

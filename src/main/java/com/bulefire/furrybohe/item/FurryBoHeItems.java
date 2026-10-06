@@ -115,15 +115,15 @@ public class FurryBoHeItems {
     // ================================================================
     
     /** 兽爪版型 */
-    public static final Item FURSUIT_CLAW_PATTERN = FurryBoHeItemsRegister.FURSUIT_CLAW_PATTERN_REGISTER.get();
+    public static final Item FURSUIT_CLAW_PATTERN = FurryBoHeItemsRegister.FURSUIT_PAW_CLAW_PATTERN_REGISTER.get();
     /** 肉垫（手指） */
-    public static final Item FURSUIT_FINGER_PAD = FurryBoHeItemsRegister.FURSUIT_FINGER_PAD_REGISTER.get();
+    public static final Item FURSUIT_FINGER_PAD = FurryBoHeItemsRegister.FURSUIT_PAW_FINGER_PAD_REGISTER.get();
     /** 肉垫（手掌） */
-    public static final Item FURSUIT_PALM_PAD = FurryBoHeItemsRegister.FURSUIT_PALM_PAD_REGISTER.get();
+    public static final Item FURSUIT_PALM_PAD = FurryBoHeItemsRegister.FURSUIT_PAW_PALM_PAD_REGISTER.get();
     /** 兽爪【单只】 */
-    public static final Item FURSUIT_CLAW = FurryBoHeItemsRegister.FURSUIT_CLAW_REGISTER.get();
+    public static final Item FURSUIT_CLAW = FurryBoHeItemsRegister.FURSUIT_PAW_CLAW_REGISTER.get();
     /** 一对兽爪【可穿戴，2兽爪合成】 */
-    public static final Item FURSUIT_CLAW_PAIR = FurryBoHeItemsRegister.FURSUIT_CLAW_PAIR_REGISTER.get();
+    public static final Item FURSUIT_CLAW_PAIR = FurryBoHeItemsRegister.FURSUIT_PAW_CLAW_PAIR_REGISTER.get();
     
     // ================================================================
     // 兽装部件——尾巴
