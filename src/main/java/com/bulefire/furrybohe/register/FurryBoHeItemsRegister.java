@@ -1,6 +1,7 @@
 package com.bulefire.furrybohe.register;
 
 import com.bulefire.furrybohe.FurryBoHe;
+import com.bulefire.furrybohe.item.FursuitBodyDTDItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DyeColor;
@@ -11,17 +12,14 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class FurryBoHeItemsRegister {
     public static final DeferredRegister<Item> ITEMS_REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, FurryBoHe.MODID);
     
     // 冷知识：JVM初始化字段是有顺序的，不要再这个字段前加别的注册字段，除非你想要莫名其妙的NPE
-    private static final Collection<RegistryObject<Item>> all_item = new HashSet<>();
+    private static final List<RegistryObject<Item>> all_item = new ArrayList<>();
     
     // ================================================================
     // 基础材料【不参与兽装部位前缀，保持短名】
@@ -115,11 +113,20 @@ public class FurryBoHeItemsRegister {
     // ================================================================
     
     /** 身体DTD注册【定型与否由状态表示】 */
-    public static final RegistryObject<Item> FURSUIT_BODY_DTD_REGISTER = register("fursuit_body_dtd");
+    public static final RegistryObject<Item> FURSUIT_BODY_DTD_REGISTER =
+            register("fursuit_body_dtd",
+                     () -> new FursuitBodyDTDItem(
+                             new Item.Properties().setNoRepair().stacksTo(1)));
     /** 直腿DTD注册【定型与否由状态表示】 */
-    public static final RegistryObject<Item> FURSUIT_STRAIGHT_LEG_DTD_REGISTER = register("fursuit_straight_leg_dtd");
+    public static final RegistryObject<Item> FURSUIT_STRAIGHT_LEG_DTD_REGISTER =
+            register("fursuit_straight_leg_dtd",
+                     () -> new FursuitBodyDTDItem(
+                             new Item.Properties().setNoRepair().stacksTo(1)));
     /** 曲腿DTD注册【直腿DTD+树脂5，独立合成产物】 */
-    public static final RegistryObject<Item> FURSUIT_CURVED_LEG_DTD_REGISTER = register("fursuit_curved_leg_dtd");
+    public static final RegistryObject<Item> FURSUIT_CURVED_LEG_DTD_REGISTER =
+            register("fursuit_curved_leg_dtd",
+                     () -> new FursuitBodyDTDItem(
+                             new Item.Properties().setNoRepair().stacksTo(1)));
     
     // ================================================================
     // 图纸、手册与文书【空白/已设计/预设由设计数据表示，拓展由状态表示】

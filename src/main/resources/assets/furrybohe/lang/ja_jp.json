@@ -1,6 +1,4 @@
 {
-  "itemGroup.furrybohe": "ファーリーボヘ",
-
   "block.furrybohe.fursuit_workstation": "ファースーツ作業台",
   "block.furrybohe.resin_collector": "樹脂コレクター",
   "block.furrybohe.fur_crafting_table": "毛布製作台",
@@ -111,5 +109,13 @@
 
   "item.furrybohe.cat_energy_collector": "猫ちゃんコレクター",
 
-  "tab.furrybohe.main_tab": "FurryBoHe"
+  "tab.furrybohe.main_tab": "ファーリーボヘ",
+
+  "furrybohe.jp.egg.1": "おめでとう、このイースターエッグを見つけた！",
+  "furrybohe.jp.egg.2": "賞品は：満員電車に乗る権利。",
+  "furrybohe.jp.egg.3": "なぜこんなに混んでいる？",
+  "furrybohe.jp.egg.4": "みんな同じ電車に乗るから。",
+  "furrybohe.jp.egg.5": "次の電車は？",
+  "furrybohe.jp.egg.6": "もっと混んでいる。",
+  "furrybohe.jp.egg.7": "§7—— 日本：乗るか乗らないか、乗るしかない。§r"
 }

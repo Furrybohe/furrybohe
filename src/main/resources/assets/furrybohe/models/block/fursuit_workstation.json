@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "furrybohe:particle/fursuit_workstation_break",
+    "down": "furrybohe:block/fursuit_workstation_down",
+    "up": "furrybohe:block/fursuit_workstation_up",
+    "north": "furrybohe:block/fursuit_workstation_back",
+    "south": "furrybohe:block/fursuit_workstation_side",
+    "west": "furrybohe:block/fursuit_workstation_side",
+    "east": "furrybohe:block/fursuit_workstation_side"
+  }
+}

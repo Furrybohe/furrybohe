@@ -1,6 +1,4 @@
 {
-  "itemGroup.furrybohe": "兽薄荷",
-
   "block.furrybohe.fursuit_workstation": "兽装工作站",
   "block.furrybohe.resin_collector": "树脂收集器",
   "block.furrybohe.fur_crafting_table": "毛布制作台",
@@ -111,5 +109,9 @@
 
   "item.furrybohe.cat_energy_collector": "猫猫收集器",
 
-  "tab.furrybohe.main_tab": "FurryBoHe"
+  "tab.furrybohe.main_tab": "兽薄荷",
+
+  "furrybohe.cn.egg.1": "恭喜你找到彩蛋！",
+  "furrybohe.cn.egg.2": "但你应该在写作业。",
+  "furrybohe.cn.egg.3": "§7—— 快去写。§r"
 }

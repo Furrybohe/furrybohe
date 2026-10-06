@@ -1,6 +1,4 @@
 {
-  "itemGroup.furrybohe": "兽薄荷",
-
   "block.furrybohe.fursuit_workstation": "兽装作台",
   "block.furrybohe.resin_collector": "收脂器",
   "block.furrybohe.fur_crafting_table": "毛布作台",
@@ -111,5 +109,10 @@
 
   "item.furrybohe.cat_energy_collector": "猫猫收器",
 
-  "tab.furrybohe.main_tab": "FurryBoHe"
+  "tab.furrybohe.main_tab": "兽薄荷",
+
+  "furrybohe.lzh.egg.1": "子曰：掘石而不还，非君子也。",
+  "furrybohe.lzh.egg.2": "又曰：邻人之石，不可取也。",
+  "furrybohe.lzh.egg.3": "再曰：汝既得此彩蛋，速去还石。",
+  "furrybohe.lzh.egg.4": "§7—— 孔子曰：吾没说过。§r"
 }
