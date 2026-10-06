@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:purple_dye"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "furrybohe:resin_fragment"
+    }
+  ],
+  "result": {
+    "item": "furrybohe:fursuit_purple_eyes"
+  }
+}

@@ -103,10 +103,10 @@ public class FurryBoHeItems {
     public static final Item FURSUIT_RESIN_SKULL = FurryBoHeItemsRegister.FURSUIT_RESIN_SKULL_REGISTER.get();
     /** 骨头头骨【彩蛋，仅装饰】 */
     public static final Item FURSUIT_BONE_SKULL = FurryBoHeItemsRegister.FURSUIT_BONE_SKULL_REGISTER.get();
-    /** 兽装眼睛 */
-    public static final Item FURSUIT_EYES = FurryBoHeItemsRegister.FURSUIT_EYES_REGISTER.get();
-    /** 舌头 */
-    public static final Item FURSUIT_TONGUE = FurryBoHeItemsRegister.FURSUIT_TONGUE_REGISTER.get();
+    /** 兽装眼睛【键为染料颜色名】 */
+    public static final Map<String, Item> FURSUIT_EYES = new HashMap<>(16, 1.0f);
+    /** 舌头【键为染料颜色名】 */
+    public static final Map<String, Item> FURSUIT_TONGUE = new HashMap<>(16, 1.0f);
     /** 兽装头【可穿戴；剃毛与否由状态表示】 */
     public static final Item FURSUIT_HEAD = FurryBoHeItemsRegister.FURSUIT_HEAD_REGISTER.get();
     
@@ -116,10 +116,10 @@ public class FurryBoHeItems {
     
     /** 兽爪版型 */
     public static final Item FURSUIT_CLAW_PATTERN = FurryBoHeItemsRegister.FURSUIT_PAW_CLAW_PATTERN_REGISTER.get();
-    /** 肉垫（手指） */
-    public static final Item FURSUIT_FINGER_PAD = FurryBoHeItemsRegister.FURSUIT_PAW_FINGER_PAD_REGISTER.get();
-    /** 肉垫（手掌） */
-    public static final Item FURSUIT_PALM_PAD = FurryBoHeItemsRegister.FURSUIT_PAW_PALM_PAD_REGISTER.get();
+    /** 肉垫（手指）【键为染料颜色名】 */
+    public static final Map<String, Item> FURSUIT_FINGER_PAD = new HashMap<>(16, 1.0f);
+    /** 肉垫（手掌）【键为染料颜色名】 */
+    public static final Map<String, Item> FURSUIT_PALM_PAD = new HashMap<>(16, 1.0f);
     /** 兽爪【单只】 */
     public static final Item FURSUIT_CLAW = FurryBoHeItemsRegister.FURSUIT_PAW_CLAW_REGISTER.get();
     /** 一对兽爪【可穿戴，2兽爪合成】 */
@@ -198,6 +198,15 @@ public class FurryBoHeItems {
     static {
         for (var entry : FurryBoHeItemsRegister.COLOR_FUR_REGISTER.entrySet())
             COLOR_FUR.put(entry.getKey(), entry.getValue().get());
+        
+        for (var entry : FurryBoHeItemsRegister.FURSUIT_EYES_REGISTER.entrySet())
+            FURSUIT_EYES.put(entry.getKey(), entry.getValue().get());
+        for (var entry : FurryBoHeItemsRegister.FURSUIT_TONGUE_REGISTER.entrySet())
+            FURSUIT_TONGUE.put(entry.getKey(), entry.getValue().get());
+        for (var entry : FurryBoHeItemsRegister.FURSUIT_PAW_FINGER_PAD_REGISTER.entrySet())
+            FURSUIT_FINGER_PAD.put(entry.getKey(), entry.getValue().get());
+        for (var entry : FurryBoHeItemsRegister.FURSUIT_PAW_PALM_PAD_REGISTER.entrySet())
+            FURSUIT_PALM_PAD.put(entry.getKey(), entry.getValue().get());
         
         for (String name : FurryBoHeItemsRegister.PART_SOCKET_CRYSTAL_NAMES)
             SPECIAL_CRYSTAL.put(name, FurryBoHeItemsRegister.SPECIAL_CRYSTAL_REGISTER.get(name).get());

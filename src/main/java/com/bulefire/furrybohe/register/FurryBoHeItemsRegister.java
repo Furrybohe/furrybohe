@@ -137,7 +137,7 @@ public class FurryBoHeItemsRegister {
     /** 兽装设计图纸注册【右键打开可预览全装样式；空白、已设计、预设均由设计数据表示】 */
     public static final RegistryObject<Item> FURSUIT_BLUEPRINTS_REGISTER = register("fursuit_blueprints");
     /** 装师手册注册【特性/设计储存/委托拓展由状态表示】 */
-    public static final RegistryObject<Item> FURSUIT_MANUAL_REGISTER = register("fursuit_manual");
+    public static final RegistryObject<Item> FURSUIT_MANUAL_REGISTER = register("fursuit_manualfursuit_manual");
     /** 委托单注册【设计图纸+空白设计图纸+纸，不消耗原设计图纸】 */
     public static final RegistryObject<Item> COMMISSION_FORM_REGISTER = register("commission_form");
     /** “品质升级”模板注册 */
@@ -155,10 +155,10 @@ public class FurryBoHeItemsRegister {
     public static final RegistryObject<Item> FURSUIT_RESIN_SKULL_REGISTER = register("fursuit_resin_skull");
     /** 骨头头骨注册【彩蛋，仅装饰】 */
     public static final RegistryObject<Item> FURSUIT_BONE_SKULL_REGISTER = register("fursuit_bone_skull");
-    /** 兽装眼睛注册 */
-    public static final RegistryObject<Item> FURSUIT_EYES_REGISTER = register("fursuit_eyes");
-    /** 舌头注册 */
-    public static final RegistryObject<Item> FURSUIT_TONGUE_REGISTER = register("fursuit_tongue");
+    /** 兽装眼睛注册【键为染料颜色名】 */
+    public static final Map<String, RegistryObject<Item>> FURSUIT_EYES_REGISTER = new HashMap<>(16, 1.0f);
+    /** 舌头注册【键为染料颜色名】 */
+    public static final Map<String, RegistryObject<Item>> FURSUIT_TONGUE_REGISTER = new HashMap<>(16, 1.0f);
     /** 兽装头注册【可穿戴；剃毛与否由状态表示】 */
     public static final RegistryObject<Item> FURSUIT_HEAD_REGISTER = register("fursuit_head");
     
@@ -168,10 +168,10 @@ public class FurryBoHeItemsRegister {
     
     /** 兽爪版型注册 */
     public static final RegistryObject<Item> FURSUIT_PAW_CLAW_PATTERN_REGISTER = register("fursuit_paw_claw_pattern");
-    /** 肉垫（手指）注册 */
-    public static final RegistryObject<Item> FURSUIT_PAW_FINGER_PAD_REGISTER = register("fursuit_paw_finger_pad");
-    /** 肉垫（手掌）注册 */
-    public static final RegistryObject<Item> FURSUIT_PAW_PALM_PAD_REGISTER = register("fursuit_paw_palm_pad");
+    /** 肉垫（手指）注册【键为染料颜色名】 */
+    public static final Map<String, RegistryObject<Item>> FURSUIT_PAW_FINGER_PAD_REGISTER = new HashMap<>(16, 1.0f);
+    /** 肉垫（手掌）注册【键为染料颜色名】 */
+    public static final Map<String, RegistryObject<Item>> FURSUIT_PAW_PALM_PAD_REGISTER = new HashMap<>(16, 1.0f);
     /** 兽爪注册【单只】 */
     public static final RegistryObject<Item> FURSUIT_PAW_CLAW_REGISTER = register("fursuit_paw_claw");
     /** 一对兽爪注册【可穿戴，2兽爪合成】 */
@@ -248,8 +248,15 @@ public class FurryBoHeItemsRegister {
     public static final RegistryObject<Item> CAT_ENERGY_COLLECTOR_REGISTER = register("cat_energy_collector");
     
     static  {
-        for (DyeColor dyeColor : DyeColor.values())
-            COLOR_FUR_REGISTER.put(dyeColor.getName(), register(dyeColor.getName() + "_fur"));
+        for (DyeColor dyeColor : DyeColor.values()) {
+            String color = dyeColor.getName();
+            
+            COLOR_FUR_REGISTER.put(color, register(color + "_fur"));
+            FURSUIT_EYES_REGISTER.put(color, register("fursuit_" + color + "_eyes"));
+            FURSUIT_TONGUE_REGISTER.put(color, register("fursuit_" + color + "_tongue"));
+            FURSUIT_PAW_FINGER_PAD_REGISTER.put(color, register("fursuit_" + color + "_finger_pad"));
+            FURSUIT_PAW_PALM_PAD_REGISTER.put(color, register("fursuit_" + color + "_palm_pad"));
+        }
         
         for (String name : PART_SOCKET_CRYSTAL_NAMES)
             SPECIAL_CRYSTAL_REGISTER.put(name, register(name + "_crystal"));

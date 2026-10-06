@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"item": "minecraft:ink_sac"},
+    {"item": "minecraft:feather"},
+    {"item": "minecraft:book"}
+  ],
+  "result": {
+    "item": "furrybohe:fursuit_manualfursuit_manual",
+    "nbt": "{\"furrybohe:level\": 0, \"furrybohe:entrustment\": 0b}",
+    "count": 1
+  }
+}

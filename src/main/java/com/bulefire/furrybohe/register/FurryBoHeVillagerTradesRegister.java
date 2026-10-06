@@ -49,14 +49,23 @@ public class FurryBoHeVillagerTradesRegister {
                 0.05F
         ));
         
-        // TODO: 随机刷新颜色兽装眼睛（眼睛颜色由物品状态表示，待接入）
-        trades.get(1).add((trader, rand) -> new MerchantOffer(
-                new ItemStack(Items.EMERALD, 15),
-                new ItemStack(FurryBoHeItemsRegister.FURSUIT_EYES_REGISTER.get(), 1),
-                10,
-                2,
-                0.05F
-        ));
+        // 随机刷新颜色兽装眼睛
+        trades.get(1).add(new VillagerTrades.ItemListing() {
+            @Override
+            public @NotNull MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
+                DyeColor[] colors = DyeColor.values();
+                DyeColor randomColor = colors[rand.nextInt(colors.length)];
+                ItemStack eyesStack = new ItemStack(FurryBoHeItemsRegister.FURSUIT_EYES_REGISTER.get(randomColor.getName()).get(), 1);
+                
+                return new MerchantOffer(
+                        new ItemStack(Items.EMERALD, 15),
+                        eyesStack,
+                        10,
+                        2,
+                        0.05F
+                );
+            }
+        });
         
         // TODO: 空白设计图纸（空白与否由设计数据表示，待接入）
         trades.get(1).add((trader, rand) -> new MerchantOffer(
