@@ -69,8 +69,14 @@
   "item.furrybohe.crystal_stability_crystal": "Crystal Stability Crystal",
 
   "item.furrybohe.fursuit_body_dtd": "Body DTD",
+  "item.furrybohe.fursuit_body_dtd_shaped": "Body DTD (Shaped)",
+  "item.furrybohe.fursuit_body_dtd_unshaped": "Body DTD (Unshaped)",
   "item.furrybohe.fursuit_straight_leg_dtd": "Straight Leg DTD",
+  "item.furrybohe.fursuit_straight_leg_dtd_shaped": "Straight Leg DTD (Shaped)",
+  "item.furrybohe.fursuit_straight_leg_dtd_unshaped": "Straight Leg DTD (Unshaped)",
   "item.furrybohe.fursuit_curved_leg_dtd": "Curved Leg DTD",
+  "item.furrybohe.fursuit_curved_leg_dtd_shaped": "Curved Leg DTD (Shaped)",
+  "item.furrybohe.fursuit_curved_leg_dtd_unshaped": "Curved Leg DTD (Unshaped)",
 
   "item.furrybohe.fursuit_blueprints": "Fursuit Blueprint",
   "item.furrybohe.fursuit_manual": "Fursuit Maker's Manual",

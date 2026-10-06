@@ -23,4 +23,17 @@ public class FursuitCurvedLegDTDItem extends Item {
         
         return stack;
     }
+    
+    @Override
+    public @NotNull String getDescriptionId(@NotNull ItemStack stack) {
+        CompoundTag tag = stack.getTag();
+        if (tag == null) {
+            tag = stack.getOrCreateTag();
+            tag.putBoolean(SHAPED_KEY, false);
+        }
+        
+        return tag.getBoolean(SHAPED_KEY) ?
+                "item.furrybohe.fursuit_curved_leg_dtd_shaped" :
+                "item.furrybohe.fursuit_curved_leg_dtd_unshaped";
+    }
 }

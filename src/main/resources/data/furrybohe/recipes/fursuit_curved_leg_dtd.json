@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"item": "furrybohe:resin"},
+    {"item": "furrybohe:resin"},
+    {"item": "furrybohe:resin"},
+    {"item": "furrybohe:resin"},
+    {"item": "furrybohe:resin"},
+    {"item": "furrybohe:fursuit_straight_leg_dtd"}
+  ],
+  "result": {
+    "item": "furrybohe:fursuit_curved_leg_dtd",
+    "nbt": "{\"furrybohe:shaped\": 0b}",
+    "count": 1
+  }
+}

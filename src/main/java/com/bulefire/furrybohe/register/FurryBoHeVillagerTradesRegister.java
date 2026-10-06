@@ -43,7 +43,7 @@ public class FurryBoHeVillagerTradesRegister {
         trades.get(1).add((trader, rand) -> new MerchantOffer(
                 new ItemStack(Items.EMERALD, 20),
                 new ItemStack(Items.PAPER, 1),
-                new ItemStack(FurryBoHeItemsRegister.FURSUIT_CLAW_PATTERN_REGISTER.get(), 1),
+                new ItemStack(FurryBoHeItemsRegister.FURSUIT_PAW_CLAW_PATTERN_REGISTER.get(), 1),
                 10,
                 2,
                 0.05F

@@ -2,6 +2,8 @@ package com.bulefire.furrybohe.register;
 
 import com.bulefire.furrybohe.FurryBoHe;
 import com.bulefire.furrybohe.item.FursuitBodyDTDItem;
+import com.bulefire.furrybohe.item.FursuitCurvedLegDTDItem;
+import com.bulefire.furrybohe.item.FursuitStraightLegDTDItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DyeColor;
@@ -120,12 +122,12 @@ public class FurryBoHeItemsRegister {
     /** 直腿DTD注册【定型与否由状态表示】 */
     public static final RegistryObject<Item> FURSUIT_STRAIGHT_LEG_DTD_REGISTER =
             register("fursuit_straight_leg_dtd",
-                     () -> new FursuitBodyDTDItem(
+                     () -> new FursuitStraightLegDTDItem(
                              new Item.Properties().setNoRepair().stacksTo(1)));
     /** 曲腿DTD注册【直腿DTD+树脂5，独立合成产物】 */
     public static final RegistryObject<Item> FURSUIT_CURVED_LEG_DTD_REGISTER =
             register("fursuit_curved_leg_dtd",
-                     () -> new FursuitBodyDTDItem(
+                     () -> new FursuitCurvedLegDTDItem(
                              new Item.Properties().setNoRepair().stacksTo(1)));
     
     // ================================================================

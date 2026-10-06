@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "xxx",
+    "xlx",
+    "xxx"
+  ],
+  "key": {
+    "x": {
+      "item": "furrybohe:resin"
+    },
+    "l": {
+      "item": "minecraft:leather_chestplate"
+    }
+  },
+  "result": {
+    "item": "furrybohe:fursuit_body_dtd",
+    "nbt": "{\"furrybohe:shaped\": 0b}",
+    "count": 1
+  }
+}
