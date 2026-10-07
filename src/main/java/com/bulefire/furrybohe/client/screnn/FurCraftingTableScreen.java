@@ -2,7 +2,6 @@ package com.bulefire.furrybohe.client.screnn;
 
 import com.bulefire.furrybohe.FurryBoHe;
 import com.bulefire.furrybohe.menu.FurCraftingTableMenu;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;

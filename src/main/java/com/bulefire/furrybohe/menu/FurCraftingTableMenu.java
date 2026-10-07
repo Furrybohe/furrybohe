@@ -5,19 +5,13 @@ import com.bulefire.furrybohe.item.FurryBoHeItems;
 import com.bulefire.furrybohe.recipe.FurRecipe;
 import com.bulefire.furrybohe.register.FurryBoHeMenuTypeRegister;
 import com.bulefire.furrybohe.register.FurryBoHeRecipesRegister;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.ContainerListener;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -131,6 +125,7 @@ public class FurCraftingTableMenu extends AbstractContainerMenu {
         }
         
         ItemStack desired = recipe.getResultItem(player.level().registryAccess()).copy();
+        desired.setDamageValue((int) (desired.getMaxDamage() * 0.9));
         if (! ItemStack.matches(result.getItem(0), desired)) {
             result.setItem(0, desired);
         }

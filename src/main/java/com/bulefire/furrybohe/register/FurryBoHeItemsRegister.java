@@ -15,7 +15,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class FurryBoHeItemsRegister {
@@ -252,7 +255,7 @@ public class FurryBoHeItemsRegister {
         for (DyeColor dyeColor : DyeColor.values()) {
             String color = dyeColor.getName();
             
-            COLOR_FUR_REGISTER.put(color, register(color + "_fur", () -> new FurItem(new Item.Properties())));
+            COLOR_FUR_REGISTER.put(color, register(color + "_fur", () -> new FurItem(new Item.Properties().durability(100))));
             FURSUIT_EYES_REGISTER.put(color, register("fursuit_" + color + "_eyes"));
             FURSUIT_TONGUE_REGISTER.put(color, register("fursuit_" + color + "_tongue"));
             FURSUIT_PAW_FINGER_PAD_REGISTER.put(color, register("fursuit_" + color + "_finger_pad"));

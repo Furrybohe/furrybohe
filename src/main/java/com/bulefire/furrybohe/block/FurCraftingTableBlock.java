@@ -8,11 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Containers;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -101,13 +97,13 @@ public class FurCraftingTableBlock extends Block implements EntityBlock {
         @Override
         protected void saveAdditional(@NotNull CompoundTag tag) {
             super.saveAdditional(tag);
-            tag.put("inventory", input.createTag());
+            tag.put("Items", input.createTag());
         }
         
         @Override
         public void load(@NotNull CompoundTag tag) {
             super.load(tag);
-            input.fromTag(tag.getList("inventory", Tag.TAG_COMPOUND));
+            input.fromTag(tag.getList("Items", Tag.TAG_COMPOUND));
         }
         
         @Override
@@ -117,7 +113,7 @@ public class FurCraftingTableBlock extends Block implements EntityBlock {
         
         @Override
         public AbstractContainerMenu createMenu(int id, @NotNull Inventory playerInventory, @NotNull Player player) {
-            return new FurCraftingTableMenu(id, playerInventory, this); // 传入 BlockEntity
+            return new FurCraftingTableMenu(id, playerInventory, this);
         }
     }
 }
