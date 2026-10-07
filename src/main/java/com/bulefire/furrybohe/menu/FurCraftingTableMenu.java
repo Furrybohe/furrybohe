@@ -25,16 +25,14 @@ public class FurCraftingTableMenu extends AbstractContainerMenu {
     private static final int INPUT_SLOTS = FurCraftingSlots.SIZE;
     
     private static final int FALLBACK_SIZE = FurCraftingSlots.SIZE;
-
+    
     private final FurCraftingTableBlock.@Nullable FurCraftingTableBlockEntity entity;
     private final Player player;
     private final SimpleContainer input;
     private final SimpleContainer result = new SimpleContainer(1);
-    private final ContainerListener inputListener = container -> updateResult();
+    private final ContainerListener inputListener = container -> refreshOutput();
     
-    private int pendingLeather = 0;
-    private int pendingFiller = 0;
-    private int pendingDye = 0;
+    private boolean consuming = false;
     
     public FurCraftingTableMenu(int containerId, @NotNull Inventory playerInventory,
                                 FurCraftingTableBlock.@Nullable FurCraftingTableBlockEntity entity) {
@@ -68,9 +66,14 @@ public class FurCraftingTableMenu extends AbstractContainerMenu {
             }
             
             @Override
+            public boolean mayPickup(@NotNull Player player) {
+                return hasValidPlan();
+            }
+            
+            @Override
             public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
                 super.onTake(player, stack);
-                consumePending();
+                consumePlan();
             }
         });
         
@@ -79,7 +82,7 @@ public class FurCraftingTableMenu extends AbstractContainerMenu {
         addPlayerInventory(playerInventory, 8, 84);
         addPlayerHotbar(playerInventory, 8, 142);
         
-        updateResult();
+        refreshOutput();
     }
     
     public FurCraftingTableMenu(int containerId, @NotNull Inventory playerInventory, @NotNull FriendlyByteBuf extraData) {
@@ -100,50 +103,46 @@ public class FurCraftingTableMenu extends AbstractContainerMenu {
                 .orElse(null);
     }
     
-    private void updateResult() {
-        if (player.level().isClientSide()) return;
-        
+    private FurRecipe.@Nullable CraftPlan currentPlan() {
         FurRecipe recipe = findRecipe();
-        if (recipe == null) {
+        return recipe == null ? null : recipe.plan(input);
+    }
+    
+    private boolean hasValidPlan() {
+        return currentPlan() != null;
+    }
+    
+    private void refreshOutput() {
+        if (consuming) return;
+        
+        FurRecipe.CraftPlan plan = currentPlan();
+        if (plan == null) {
             if (! result.getItem(0).isEmpty()) {
                 result.setItem(0, ItemStack.EMPTY);
             }
-            clearPending();
             return;
         }
         
-        int fillerCost = recipe.fillerCost(input.getItem(FurCraftingSlots.FILLER));
-        if (fillerCost <= 0) {
-            if (! result.getItem(0).isEmpty()) {
-                result.setItem(0, ItemStack.EMPTY);
-            }
-            clearPending();
-            return;
-        }
-        
-        ItemStack desired = recipe.getResultItem(player.level().registryAccess()).copy();
-        desired.setDamageValue((int) (desired.getMaxDamage() * 0.9));
+        ItemStack desired = plan.result();
+        desired.setDamageValue((int) (desired.getMaxDamage() * plan.damageCount()*0.1));
         if (! ItemStack.matches(result.getItem(0), desired)) {
             result.setItem(0, desired);
         }
+    }
+
+    private void consumePlan() {
+        FurRecipe.CraftPlan plan = currentPlan();
+        if (plan == null) return;
         
-        pendingLeather = 1;
-        pendingDye = 1;
-        pendingFiller = fillerCost;
-    }
-    
-    private void clearPending() {
-        pendingLeather = 0;
-        pendingDye = 0;
-        pendingFiller = 0;
-    }
-    
-    private void consumePending() {
-        if (pendingLeather > 0) input.removeItem(FurCraftingSlots.LEATHER, pendingLeather);
-        if (pendingDye > 0) input.removeItem(FurCraftingSlots.DYE, pendingDye);
-        if (pendingFiller > 0) input.removeItem(FurCraftingSlots.FILLER, pendingFiller);
-        clearPending();
-        updateResult();
+        consuming = true;
+        try {
+            input.removeItem(FurCraftingSlots.LEATHER, plan.leather());
+            input.removeItem(FurCraftingSlots.FILLER, plan.filler());
+            input.removeItem(FurCraftingSlots.DYE, plan.dye());
+        } finally {
+            consuming = false;
+        }
+        refreshOutput();
     }
     
     private void addPlayerInventory(Inventory inv, int leftCol, int topRow) {
@@ -164,23 +163,17 @@ public class FurCraftingTableMenu extends AbstractContainerMenu {
     @Override
     public @NotNull ItemStack quickMoveStack(@NotNull Player player, int index) {
         Slot slot = this.slots.get(index);
-        if (!slot.hasItem()) return ItemStack.EMPTY;
-        
-        if (index == SLOT_RESULT) {
-            ItemStack taken = slot.getItem().copy();
-            if ( player.level().isClientSide()) {
-                if (!this.moveItemStackTo(slot.getItem(), MENU_SLOTS, this.slots.size(), true)) {
-                    return ItemStack.EMPTY;
-                }
-                slot.onTake(player, taken);
-            }
-            return taken;
-        }
+        if (! slot.hasItem()) return ItemStack.EMPTY;
         
         ItemStack stackInSlot = slot.getItem();
-        ItemStack result = stackInSlot.copy();
+        ItemStack original = stackInSlot.copy();
         
-        if (index < MENU_SLOTS) {
+        if (index == SLOT_RESULT) {
+            if (! this.moveItemStackTo(stackInSlot, MENU_SLOTS, this.slots.size(), true)) {
+                return ItemStack.EMPTY;
+            }
+            slot.onQuickCraft(stackInSlot, original);
+        } else if (index < MENU_SLOTS) {
             if (! this.moveItemStackTo(stackInSlot, MENU_SLOTS, this.slots.size(), true)) {
                 return ItemStack.EMPTY;
             }
@@ -196,13 +189,13 @@ public class FurCraftingTableMenu extends AbstractContainerMenu {
             slot.setChanged();
         }
         
-        if (stackInSlot.getCount() == result.getCount()) {
+        if (stackInSlot.getCount() == original.getCount()) {
             return ItemStack.EMPTY;
         }
         
         slot.onTake(player, stackInSlot);
         
-        return result;
+        return original;
     }
     
     @Override
