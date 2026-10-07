@@ -7,8 +7,8 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class FursuitManualItem extends Item {
-    private static final String LEVEL_KEY = FurryBoHe.MODID + ":level";
-    private static final String ENTRUSTMENT_KEY = FurryBoHe.MODID + ":entrustment";
+    public static final String LEVEL_KEY = FurryBoHe.MODID + ":level";
+    public static final String ENTRUSTMENT_KEY = FurryBoHe.MODID + ":entrustment";
     
     public FursuitManualItem(Properties properties) {
         super(properties);

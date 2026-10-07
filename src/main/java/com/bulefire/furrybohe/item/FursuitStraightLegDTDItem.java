@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class FursuitStraightLegDTDItem extends Item {
-    private static final String SHAPED_KEY = FurryBoHe.MODID+":shaped";
+    public static final String SHAPED_KEY = FurryBoHe.MODID+":shaped";
     
     public FursuitStraightLegDTDItem(Properties properties) {
         super(properties);

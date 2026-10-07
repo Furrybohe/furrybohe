@@ -1,6 +1,9 @@
 package com.bulefire.furrybohe.register;
 
 import com.bulefire.furrybohe.FurryBoHe;
+import com.bulefire.furrybohe.item.FursuitBlueprintsItem;
+import com.bulefire.furrybohe.item.FursuitBodyDTDItem;
+import com.bulefire.furrybohe.item.FursuitStraightLegDTDItem;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -29,16 +32,7 @@ public class FurryBoHeVillagerTradesRegister {
             registerFurTraderTrade(event.getTrades());
     }
     
-    // ================================================================
-    // 装师【fursuit_maker】交易
-    // 「未定型DTD」「空白/预设设计图纸」「无拓展/满拓展装师手册」「随机刷新颜色兽装眼睛」
-    // 「30~60% / 50~80% / 70~100% 随机」等均由物品状态（NBT/组件）表示，
-    // 现无对应状态实现，一律留空并标记 TODO
-    // ================================================================
-    
     private static void registerFursuitMakerTrade(@NotNull Int2ObjectMap<List<VillagerTrades.ItemListing>> trades) {
-        // ---------------- 新手 ----------------
-        
         // TODO: 兽爪版型 30~60% 随机（版型属性由物品状态表示，待接入）
         trades.get(1).add((trader, rand) -> new MerchantOffer(
                 new ItemStack(Items.EMERALD, 20),
@@ -48,8 +42,7 @@ public class FurryBoHeVillagerTradesRegister {
                 2,
                 0.05F
         ));
-        
-        // 随机刷新颜色兽装眼睛
+
         trades.get(1).add(new VillagerTrades.ItemListing() {
             @Override
             public @NotNull MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
@@ -67,14 +60,22 @@ public class FurryBoHeVillagerTradesRegister {
             }
         });
         
-        // TODO: 空白设计图纸（空白与否由设计数据表示，待接入）
-        trades.get(1).add((trader, rand) -> new MerchantOffer(
-                new ItemStack(Items.EMERALD, 7),
-                new ItemStack(FurryBoHeItemsRegister.FURSUIT_BLUEPRINTS_REGISTER.get(), 1),
-                10,
-                2,
-                0.05F
-        ));
+        trades.get(1).add(new VillagerTrades.ItemListing() {
+            @Override
+            public @NotNull MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
+                ItemStack bp = new ItemStack(FurryBoHeItemsRegister.FURSUIT_BLUEPRINTS_REGISTER.get(), 1);
+                
+                bp.getOrCreateTag().putString(FursuitBlueprintsItem.DESIGNED, FursuitBlueprintsItem.EMPTY);
+                
+                return new MerchantOffer(
+                        new ItemStack(Items.EMERALD, 7),
+                        bp,
+                        10,
+                        2,
+                        0.05F
+                );
+            }
+        });
         
         trades.get(1).add((trader, rand) -> new MerchantOffer(
                 new ItemStack(Items.EMERALD, 12),
@@ -83,8 +84,6 @@ public class FurryBoHeVillagerTradesRegister {
                 2,
                 0.05F
         ));
-        
-        // ---------------- 学徒 ----------------
         
         // TODO: 无拓展装师手册（拓展与否由状态表示，待接入）
         trades.get(2).add((trader, rand) -> new MerchantOffer(
@@ -139,25 +138,39 @@ public class FurryBoHeVillagerTradesRegister {
                 0.05F
         ));
         
-        // ---------------- 老手 ----------------
+        trades.get(3).add(new VillagerTrades.ItemListing() {
+            @Override
+            public @NotNull MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
+                ItemStack dtd = new ItemStack(FurryBoHeItemsRegister.FURSUIT_BODY_DTD_REGISTER.get(), 1);
+                
+                dtd.getOrCreateTag().putBoolean(FursuitBodyDTDItem.SHAPED_KEY, false);
+                
+                return new MerchantOffer(
+                        new ItemStack(Items.EMERALD, 58),
+                        dtd,
+                        10,
+                        2,
+                        0.05F);
+            }
+        }
+        );
         
-        // TODO: 身体未定型DTD（定型与否由状态表示，待接入）
-        trades.get(3).add((trader, rand) -> new MerchantOffer(
-                new ItemStack(Items.EMERALD, 58),
-                new ItemStack(FurryBoHeItemsRegister.FURSUIT_BODY_DTD_REGISTER.get(), 1),
-                10,
-                2,
-                0.05F
-        ));
-        
-        // TODO: 腿未定型DTD（定型与否由状态表示，待接入）
-        trades.get(3).add((trader, rand) -> new MerchantOffer(
-                new ItemStack(Items.EMERALD, 54),
-                new ItemStack(FurryBoHeItemsRegister.FURSUIT_STRAIGHT_LEG_DTD_REGISTER.get(), 1),
-                10,
-                2,
-                0.05F
-        ));
+        trades.get(3).add(new VillagerTrades.ItemListing() {
+            @Override
+            public @NotNull MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
+                ItemStack dtd = new ItemStack(FurryBoHeItemsRegister.FURSUIT_STRAIGHT_LEG_DTD_REGISTER.get(), 1);
+                
+                dtd.getOrCreateTag().putBoolean(FursuitStraightLegDTDItem.SHAPED_KEY, false);
+                
+                return new MerchantOffer(
+                        new ItemStack(Items.EMERALD, 54),
+                        dtd,
+                        10,
+                        2,
+                        0.05F
+                );
+            }
+        });
         
         trades.get(3).add((trader, rand) -> new MerchantOffer(
                 new ItemStack(Items.EMERALD, 42),
@@ -182,8 +195,6 @@ public class FurryBoHeVillagerTradesRegister {
                 2,
                 0.05F
         ));
-        
-        // ---------------- 专家 ----------------
         
         // TODO: 海绵头骨 70~100% 随机（头骨属性由物品状态表示，待接入）
         trades.get(4).add((trader, rand) -> new MerchantOffer(
@@ -236,8 +247,6 @@ public class FurryBoHeVillagerTradesRegister {
                 0.05F
         ));
         
-        // ---------------- 大师 ----------------
-        
         // TODO: 满拓展装师手册（拓展由状态表示，待接入）
         trades.get(5).add((trader, rand) -> new MerchantOffer(
                 new ItemStack(Items.EMERALD, 29),
@@ -281,10 +290,6 @@ public class FurryBoHeVillagerTradesRegister {
                 0.05F
         ));
     }
-    
-    // ================================================================
-    // 毛布商【fur_trader】交易
-    // ================================================================
     
     private static void registerFurTraderTrade(Int2ObjectMap<List<VillagerTrades.ItemListing>> trades) {
         trades.get(1).add((trader, rand) -> new MerchantOffer(
@@ -368,13 +373,16 @@ public class FurryBoHeVillagerTradesRegister {
                 2,
                 0.05F
         ));
-        // TODO: 耐久10~50%白色毛布
+
         trades.get(3).add(new VillagerTrades.ItemListing() {
             @Override
             public @NotNull MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
+                ItemStack furStack = new ItemStack(FurryBoHeItemsRegister.COLOR_FUR_REGISTER.get(DyeColor.WHITE.getName()).get(), 5);
+                int damage = rand.nextIntBetweenInclusive(10, 50);
+                furStack.setDamageValue(damage);
                 return new MerchantOffer(
                         new ItemStack(Items.EMERALD, 41),
-                        new ItemStack(FurryBoHeItemsRegister.COLOR_FUR_REGISTER.get(DyeColor.WHITE.getName()).get(), 5),
+                        furStack,
                         10,
                         2,
                         0.05F
@@ -405,7 +413,7 @@ public class FurryBoHeVillagerTradesRegister {
                 2,
                 0.05F
         ));
-        // TODO: 耐久20-60%随机颜色毛布
+
         trades.get(4).add(new VillagerTrades.ItemListing() {
             @Override
             public @NotNull MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
@@ -413,6 +421,9 @@ public class FurryBoHeVillagerTradesRegister {
                 DyeColor randomColor = colors[rand.nextInt(colors.length)];
                 ItemStack dyeStack = new ItemStack(DyeItem.byColor(randomColor), 1);
                 ItemStack furStack = new ItemStack(FurryBoHeItemsRegister.COLOR_FUR_REGISTER.get(randomColor.getName()).get(), 1);
+                
+                int damage = rand.nextIntBetweenInclusive(20, 60);
+                furStack.setDamageValue(damage);
                 
                 return new MerchantOffer(
                         new ItemStack(Items.EMERALD, 60),
@@ -424,7 +435,7 @@ public class FurryBoHeVillagerTradesRegister {
                 );
             }
         });
-        // TODO: 满耐久随机颜色毛布
+
         trades.get(4).add(new VillagerTrades.ItemListing() {
             @Override
             public @NotNull MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {

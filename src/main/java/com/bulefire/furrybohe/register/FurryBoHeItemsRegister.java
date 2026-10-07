@@ -280,9 +280,6 @@ public class FurryBoHeItemsRegister {
         return i;
     }
     
-    /** 由方块注册对应的方块物品【id 取方块路径名，延迟取值以避免方块尚未绑定】
-     * <p>不可用 {@code block.getRegisteredName()}：其结果为「命名空间:路径」，会被再次拼上命名空间；
-     * 也不可在静态初始化时调用 {@code block.get()}，此时方块尚未注册会抛 NPE */
     public static @NotNull RegistryObject<Item> register(@NotNull RegistryObject<? extends Block> block) {
         return ITEMS_REGISTER.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
     }
