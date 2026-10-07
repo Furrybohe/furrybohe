@@ -1,4 +1,4 @@
-package com.bulefire.furrybohe.datagen;
+package com.bulefire.furrybohe.datagen.recipes;
 
 import com.bulefire.furrybohe.register.FurryBoHeItemsRegister;
 import net.minecraft.data.PackOutput;

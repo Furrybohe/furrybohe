@@ -43,7 +43,7 @@ public class FurryBoHeBlocks {
     /** 棉花植株【参考原版小麦 WHEAT：作物、无碰撞、随机刻、瞬间破坏】 */
     public static final Block COTTON_CROP = FurryBoHeBlocksRegister.COTTON_CROP_REGISTER.get();
 }
-// 别学这个，我只是艺高人胆大（bushi
+// 好孩子别学这个，我只是艺高人胆大（bushi
 @Mod.EventBusSubscriber(modid=FurryBoHe.MODID, bus=Mod.EventBusSubscriber.Bus.MOD, value=Dist.CLIENT)
 class FurryBoHeBlocksState {
     public static boolean loaded = false;

@@ -52,6 +52,10 @@ public class FurryBoHe {
         FurryBoHeCreativeTabsRegister.TABS_REGISTER.register(modEventBus);
         FurryBoHePoiTypesRegister.POI_TYPES_REGISTER.register(modEventBus);
         FurryBoHeVillagerProfessionRegister.PROFESSIONS_REGISTER.register(modEventBus);
+        FurryBoHeMenuTypeRegister.MENU_TYPES_REGISTER.register(modEventBus);
+        FurryBoHeBlockEntityRegister.BLOCK_ENTITIES_REGISTER.register(modEventBus);
+        FurryBoHeRecipesRegister.RECIPES_REGISTER.register(modEventBus);
+        FurryBoHeRecipeSerializerRegister.RECIPE_SERIALIZERS_REGISTER.register(modEventBus);
         
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -65,15 +69,5 @@ public class FurryBoHe {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
-    }
-    
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @Mod.EventBusSubscriber(modid=MODID, bus=Mod.EventBusSubscriber.Bus.MOD, value=Dist.CLIENT)
-    public static class ClientModEvents {
-        
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-            // Some client setup code
-        }
     }
 }
