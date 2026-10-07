@@ -1,12 +1,12 @@
 package com.bulefire.furrybohe.menu;
 
+import com.bulefire.furrybohe.block.FurCraftingSlots;
 import com.bulefire.furrybohe.block.FurCraftingTableBlock;
-import com.bulefire.furrybohe.item.FurryBoHeItems;
 import com.bulefire.furrybohe.recipe.FurRecipe;
 import com.bulefire.furrybohe.register.FurryBoHeMenuTypeRegister;
 import com.bulefire.furrybohe.register.FurryBoHeRecipesRegister;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.ContainerListener;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -14,22 +14,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class FurCraftingTableMenu extends AbstractContainerMenu {
-    private static final int INPUT_LEATHER = 0;
-    private static final int INPUT_FILLER = 1;
-    private static final int INPUT_DYE = 2;
     private static final int SLOT_RESULT = 3;
     private static final int MENU_SLOTS = 4;
-    private static final int INPUT_SLOTS = 3;
+    private static final int INPUT_SLOTS = FurCraftingSlots.SIZE;
     
-    private final FurCraftingTableBlock.FurCraftingTableBlockEntity entity;
+    private static final int FALLBACK_SIZE = FurCraftingSlots.SIZE;
+
+    private final FurCraftingTableBlock.@Nullable FurCraftingTableBlockEntity entity;
     private final Player player;
     private final SimpleContainer input;
     private final SimpleContainer result = new SimpleContainer(1);
@@ -39,28 +36,29 @@ public class FurCraftingTableMenu extends AbstractContainerMenu {
     private int pendingFiller = 0;
     private int pendingDye = 0;
     
-    public FurCraftingTableMenu(int containerId, @NotNull Inventory playerInventory, FurCraftingTableBlock.@NotNull FurCraftingTableBlockEntity entity) {
+    public FurCraftingTableMenu(int containerId, @NotNull Inventory playerInventory,
+                                FurCraftingTableBlock.@Nullable FurCraftingTableBlockEntity entity) {
         super(FurryBoHeMenuTypeRegister.FUR_CRAFTING_TABLE_MENU_TYPE.get(), containerId);
         this.entity = entity;
         this.player = playerInventory.player;
-        this.input = entity.getInput();
+        this.input = entity != null ? entity.getInput() : new SimpleContainer(FALLBACK_SIZE);
         
-        this.addSlot(new Slot(this.input, INPUT_LEATHER, 19, 36) {
+        this.addSlot(new Slot(this.input, FurCraftingSlots.LEATHER, 19, 36) {
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
-                return stack.is(Items.LEATHER);
+                return FurCraftingSlots.accepts(FurCraftingSlots.LEATHER, stack);
             }
         });
-        this.addSlot(new Slot(this.input, INPUT_FILLER, 52, 36) {
+        this.addSlot(new Slot(this.input, FurCraftingSlots.FILLER, 52, 36) {
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
-                return stack.is(ItemTags.WOOL) || stack.is(FurryBoHeItems.COTTON);
+                return FurCraftingSlots.accepts(FurCraftingSlots.FILLER, stack);
             }
         });
-        this.addSlot(new Slot(this.input, INPUT_DYE, 84, 36) {
+        this.addSlot(new Slot(this.input, FurCraftingSlots.DYE, 84, 36) {
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
-                return stack.is(Tags.Items.DYES);
+                return FurCraftingSlots.accepts(FurCraftingSlots.DYE, stack);
             }
         });
         this.addSlot(new Slot(this.result, 0, 146, 36) {
@@ -84,16 +82,15 @@ public class FurCraftingTableMenu extends AbstractContainerMenu {
         updateResult();
     }
     
-    public FurCraftingTableMenu(int containerId, Inventory playerInventory, @NotNull FriendlyByteBuf extraData) {
+    public FurCraftingTableMenu(int containerId, @NotNull Inventory playerInventory, @NotNull FriendlyByteBuf extraData) {
         this(containerId, playerInventory, resolve(playerInventory, extraData));
     }
     
-    private static FurCraftingTableBlock.FurCraftingTableBlockEntity resolve(@NotNull Inventory inv, @NotNull FriendlyByteBuf data) {
-        BlockEntity be = inv.player.level().getBlockEntity(data.readBlockPos());
-        if (!(be instanceof FurCraftingTableBlock.FurCraftingTableBlockEntity table)) {
-            throw new IllegalStateException("fur_crafting_table block entity missing on client");
-        }
-        return table;
+    private static FurCraftingTableBlock.@Nullable FurCraftingTableBlockEntity resolve(
+            @NotNull Inventory inv, @NotNull FriendlyByteBuf data) {
+        BlockPos pos = data.readBlockPos();
+        BlockEntity be = inv.player.level().getBlockEntity(pos);
+        return be instanceof FurCraftingTableBlock.FurCraftingTableBlockEntity table ? table : null;
     }
     
     private @Nullable FurRecipe findRecipe() {
@@ -115,7 +112,7 @@ public class FurCraftingTableMenu extends AbstractContainerMenu {
             return;
         }
         
-        int fillerCost = recipe.fillerCost(input.getItem(INPUT_FILLER));
+        int fillerCost = recipe.fillerCost(input.getItem(FurCraftingSlots.FILLER));
         if (fillerCost <= 0) {
             if (! result.getItem(0).isEmpty()) {
                 result.setItem(0, ItemStack.EMPTY);
@@ -142,9 +139,9 @@ public class FurCraftingTableMenu extends AbstractContainerMenu {
     }
     
     private void consumePending() {
-        if (pendingLeather > 0) input.removeItem(INPUT_LEATHER, pendingLeather);
-        if (pendingDye > 0) input.removeItem(INPUT_DYE, pendingDye);
-        if (pendingFiller > 0) input.removeItem(INPUT_FILLER, pendingFiller);
+        if (pendingLeather > 0) input.removeItem(FurCraftingSlots.LEATHER, pendingLeather);
+        if (pendingDye > 0) input.removeItem(FurCraftingSlots.DYE, pendingDye);
+        if (pendingFiller > 0) input.removeItem(FurCraftingSlots.FILLER, pendingFiller);
         clearPending();
         updateResult();
     }
@@ -167,16 +164,15 @@ public class FurCraftingTableMenu extends AbstractContainerMenu {
     @Override
     public @NotNull ItemStack quickMoveStack(@NotNull Player player, int index) {
         Slot slot = this.slots.get(index);
-        if (! slot.hasItem()) return ItemStack.EMPTY;
+        if (!slot.hasItem()) return ItemStack.EMPTY;
         
-        // 结果槽 shift 点击：搬进背包（onTake 由 moveItemStackTo 之后的逻辑触发不了，需手动走一遍）
         if (index == SLOT_RESULT) {
             ItemStack taken = slot.getItem().copy();
-            if (! player.level().isClientSide()) {
-                if (! this.moveItemStackTo(slot.getItem(), MENU_SLOTS, this.slots.size(), true)) {
+            if ( player.level().isClientSide()) {
+                if (!this.moveItemStackTo(slot.getItem(), MENU_SLOTS, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-                slot.onTake(player, taken);   // 手动触发扣料
+                slot.onTake(player, taken);
             }
             return taken;
         }
@@ -217,7 +213,10 @@ public class FurCraftingTableMenu extends AbstractContainerMenu {
     
     @Override
     public boolean stillValid(@NotNull Player player) {
-        return entity != null && !entity.isRemoved()
+        if (entity == null) {
+            return true;
+        }
+        return ! entity.isRemoved()
                 && player.distanceToSqr(entity.getBlockPos().getCenter()) <= 64.0;
     }
 }

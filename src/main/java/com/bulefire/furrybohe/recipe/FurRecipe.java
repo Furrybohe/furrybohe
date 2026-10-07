@@ -150,7 +150,6 @@ public class FurRecipe implements Recipe<Container> {
             int cottonCount = buf.readVarInt();
             int woolCount = buf.readVarInt();
             ItemStack result = buf.readItem();
-            float chance = buf.readFloat();
             return new FurRecipe(rl, leather, cotton, wool, dye, cottonCount, woolCount, result);
         }
         
