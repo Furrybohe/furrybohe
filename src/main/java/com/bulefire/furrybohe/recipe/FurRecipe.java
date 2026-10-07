@@ -2,12 +2,12 @@ package com.bulefire.furrybohe.recipe;
 
 import com.bulefire.furrybohe.register.FurryBoHeRecipeSerializerRegister;
 import com.bulefire.furrybohe.register.FurryBoHeRecipesRegister;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -19,24 +19,49 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class FurRecipe implements Recipe<Container> {
-    private final List<Ingredient> inputs; // size == 3
+    public static final int DEFAULT_COTTON_COUNT = 2;
+    public static final int DEFAULT_WOOL_COUNT = 1;
+    
+    private final ResourceLocation id;
+    private final Ingredient leather;
+    private final Ingredient cotton;
+    private final Ingredient wool;
+    private final Ingredient dye;
+    private final int cottonCount;
+    private final int woolCount;
     private final ItemStack result;
     
-    public FurRecipe(List<Ingredient> inputs, ItemStack result) {
-        this.inputs = inputs;
+    public FurRecipe(ResourceLocation id, Ingredient leather, Ingredient cotton, Ingredient wool, Ingredient dye,
+                     int cottonCount, int woolCount, ItemStack result) {
+        this.id = id;
+        this.leather = leather;
+        this.cotton = cotton;
+        this.wool = wool;
+        this.dye = dye;
+        this.cottonCount = Math.max(1, cottonCount);
+        this.woolCount = Math.max(1, woolCount);
         this.result = result;
+    }
+    
+    public int fillerCost(@NotNull ItemStack filler) {
+        if (filler.isEmpty()) return 0;
+        if (cotton.test(filler)) return cottonCount;
+        if (wool.test(filler)) return woolCount;
+        return 0;
     }
     
     @Override
     public boolean matches(@NotNull Container in, @NotNull Level level) {
-        for (int i = 0; i < 3; i++) {
-            if (!inputs.get(i).test(in.getItem(i))) return false;
-        }
-        return true;
+        ItemStack leatherStack = in.getItem(0);
+        ItemStack filler = in.getItem(1);
+        ItemStack dyeStack = in.getItem(2);
+        
+        if (!leather.test(leatherStack) || leatherStack.getCount() < 1) return false;
+        if (!dye.test(dyeStack) || dyeStack.getCount() < 1) return false;
+        
+        int cost = fillerCost(filler);
+        return cost > 0 && filler.getCount() >= cost;
     }
     
     @Override
@@ -55,8 +80,18 @@ public class FurRecipe implements Recipe<Container> {
     }
     
     @Override
+    public @NotNull NonNullList<Ingredient> getIngredients() {
+        NonNullList<Ingredient> list = NonNullList.create();
+        list.add(leather);
+        list.add(cotton);
+        list.add(wool);
+        list.add(dye);
+        return list;
+    }
+    
+    @Override
     public @NotNull ResourceLocation getId() {
-        return new ResourceLocation("furrybohe", "fur_recipe");
+        return id;
     }
     
     @Override
@@ -69,38 +104,65 @@ public class FurRecipe implements Recipe<Container> {
         return FurryBoHeRecipesRegister.FUR_RECIPE_TYPE_REGISTER.get();
     }
     
-    public List<Ingredient> getInputs() {
-        return inputs;
+    public Ingredient getLeather() {
+        return leather;
+    }
+    
+    public Ingredient getCotton() {
+        return cotton;
+    }
+    
+    public Ingredient getWool() {
+        return wool;
+    }
+    
+    public Ingredient getDye() {
+        return dye;
+    }
+    
+    public int getCottonCount() {
+        return cottonCount;
+    }
+    
+    public int getWoolCount() {
+        return woolCount;
     }
     
     public static class Serializer implements RecipeSerializer<FurRecipe> {
         @Override
         public @NotNull FurRecipe fromJson(@NotNull ResourceLocation rl, @NotNull JsonObject json) {
-            JsonArray inputArray = json.getAsJsonArray("inputs");
-            List<Ingredient> inputs = new ArrayList<>();
-            for (JsonElement e : inputArray) {
-                inputs.add(Ingredient.fromJson(e));
-            }
+            Ingredient leather = Ingredient.fromJson(json.get("leather"));
+            Ingredient cotton = Ingredient.fromJson(json.get("cotton"));
+            Ingredient wool = Ingredient.fromJson(json.get("wool"));
+            Ingredient dye = Ingredient.fromJson(json.get("dye"));
+            int cottonCount = GsonHelper.getAsInt(json, "cotton_count", DEFAULT_COTTON_COUNT);
+            int woolCount = GsonHelper.getAsInt(json, "wool_count", DEFAULT_WOOL_COUNT);
             ItemStack result = CraftingHelper.getItemStack(json.getAsJsonObject("result"), true);
-            return new FurRecipe(inputs, result);
+            return new FurRecipe(rl, leather, cotton, wool, dye, cottonCount, woolCount, result);
         }
         
         @Override
         public @Nullable FurRecipe fromNetwork(@NotNull ResourceLocation rl, @NotNull FriendlyByteBuf buf) {
-            List<Ingredient> inputs = new ArrayList<>();
-            for (int i = 0; i < 3; i++) {
-                inputs.add(Ingredient.fromNetwork(buf));
-            }
+            Ingredient leather = Ingredient.fromNetwork(buf);
+            Ingredient cotton = Ingredient.fromNetwork(buf);
+            Ingredient wool = Ingredient.fromNetwork(buf);
+            Ingredient dye = Ingredient.fromNetwork(buf);
+            int cottonCount = buf.readVarInt();
+            int woolCount = buf.readVarInt();
             ItemStack result = buf.readItem();
-            return new FurRecipe(inputs, result);
+            float chance = buf.readFloat();
+            return new FurRecipe(rl, leather, cotton, wool, dye, cottonCount, woolCount, result);
         }
         
         @Override
-        public void toNetwork(@NotNull FriendlyByteBuf buf, @NotNull FurRecipe fr) {
-            for (Ingredient ing : fr.getInputs()) {
-                ing.toNetwork(buf);
-            }
-            buf.writeItem(fr.getResultItem(RegistryAccess.EMPTY));
+        public void toNetwork(@NotNull FriendlyByteBuf buf, @NotNull FurRecipe r) {
+            r.leather.toNetwork(buf);
+            r.cotton.toNetwork(buf);
+            r.wool.toNetwork(buf);
+            r.dye.toNetwork(buf);
+            buf.writeVarInt(r.cottonCount);
+            buf.writeVarInt(r.woolCount);
+            buf.writeItem(r.result);
         }
     }
 }

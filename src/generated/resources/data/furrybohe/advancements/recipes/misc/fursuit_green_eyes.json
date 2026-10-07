@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_purple_dye": {
+    "has_green_dye": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:purple_dye"
+              "minecraft:green_dye"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:fursuit_purple_eyes"
+        "recipe": "furrybohe:fursuit_green_eyes"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_purple_dye",
+      "has_green_dye",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:fursuit_purple_eyes"
+      "furrybohe:fursuit_green_eyes"
     ]
   },
   "sends_telemetry_event": false

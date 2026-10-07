@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_lime_dye": {
+    "has_red_dye": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:lime_dye"
+              "minecraft:red_dye"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:fursuit_lime_eyes"
+        "recipe": "furrybohe:fursuit_red_eyes"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_lime_dye",
+      "has_red_dye",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:fursuit_lime_eyes"
+      "furrybohe:fursuit_red_eyes"
     ]
   },
   "sends_telemetry_event": false

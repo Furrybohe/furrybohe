@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_magenta_dye": {
+    "has_brown_dye": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:magenta_dye"
+              "minecraft:brown_dye"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:fursuit_magenta_eyes"
+        "recipe": "furrybohe:fursuit_brown_eyes"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_magenta_dye",
+      "has_brown_dye",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:fursuit_magenta_eyes"
+      "furrybohe:fursuit_brown_eyes"
     ]
   },
   "sends_telemetry_event": false

@@ -1,6 +1,7 @@
 package com.bulefire.furrybohe.register;
 
 import com.bulefire.furrybohe.FurryBoHe;
+import com.bulefire.furrybohe.item.FurItem;
 import com.bulefire.furrybohe.item.FursuitBodyDTDItem;
 import com.bulefire.furrybohe.item.FursuitCurvedLegDTDItem;
 import com.bulefire.furrybohe.item.FursuitStraightLegDTDItem;
@@ -251,7 +252,7 @@ public class FurryBoHeItemsRegister {
         for (DyeColor dyeColor : DyeColor.values()) {
             String color = dyeColor.getName();
             
-            COLOR_FUR_REGISTER.put(color, register(color + "_fur"));
+            COLOR_FUR_REGISTER.put(color, register(color + "_fur", () -> new FurItem(new Item.Properties())));
             FURSUIT_EYES_REGISTER.put(color, register("fursuit_" + color + "_eyes"));
             FURSUIT_TONGUE_REGISTER.put(color, register("fursuit_" + color + "_tongue"));
             FURSUIT_PAW_FINGER_PAD_REGISTER.put(color, register("fursuit_" + color + "_finger_pad"));

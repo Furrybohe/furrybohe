@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_orange_dye": {
+    "has_blue_dye": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:orange_dye"
+              "minecraft:blue_dye"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:fursuit_orange_eyes"
+        "recipe": "furrybohe:fursuit_blue_eyes"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_orange_dye",
+      "has_blue_dye",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:fursuit_orange_eyes"
+      "furrybohe:fursuit_blue_eyes"
     ]
   },
   "sends_telemetry_event": false

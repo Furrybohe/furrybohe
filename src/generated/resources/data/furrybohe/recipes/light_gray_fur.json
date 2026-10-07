@@ -1,0 +1,21 @@
+{
+  "type": "furrybohe:fur_recipe",
+  "chance": 0.1,
+  "cotton": {
+    "item": "furrybohe:cotton"
+  },
+  "cotton_count": 2,
+  "dye": {
+    "item": "minecraft:light_gray_dye"
+  },
+  "leather": {
+    "item": "minecraft:leather"
+  },
+  "result": {
+    "item": "furrybohe:light_gray_fur"
+  },
+  "wool": {
+    "tag": "minecraft:wool"
+  },
+  "wool_count": 1
+}

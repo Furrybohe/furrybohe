@@ -1,34 +1,34 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "minecraft:fursuit_yellow_eyes"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    },
-    "has_yellow_dye": {
+    "has_lime_dye": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:yellow_dye"
+              "minecraft:lime_dye"
             ]
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "furrybohe:fursuit_lime_eyes"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_yellow_dye",
+      "has_lime_dye",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:fursuit_yellow_eyes"
+      "furrybohe:fursuit_lime_eyes"
     ]
   },
   "sends_telemetry_event": false

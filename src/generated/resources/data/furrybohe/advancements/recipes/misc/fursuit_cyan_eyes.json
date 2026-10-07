@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:fursuit_cyan_eyes"
+        "recipe": "furrybohe:fursuit_cyan_eyes"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:fursuit_cyan_eyes"
+      "furrybohe:fursuit_cyan_eyes"
     ]
   },
   "sends_telemetry_event": false
