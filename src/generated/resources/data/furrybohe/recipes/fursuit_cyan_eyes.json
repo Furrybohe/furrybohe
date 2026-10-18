@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:cyan_dye"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "furrybohe:resin_fragment"
+    }
+  ],
+  "result": {
+    "item": "furrybohe:fursuit_cyan_eyes"
+  }
+}
