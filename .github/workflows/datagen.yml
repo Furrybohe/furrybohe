@@ -1,0 +1,66 @@
+name: Data Generation
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/main/java/com/bulefire/furrybohe/common/datagen/**'
+      - 'build.gradle*'
+      - 'settings.gradle*'
+      - 'gradle.properties'
+      - 'gradle/**'
+      - 'gradlew'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'src/main/java/com/bulefire/furrybohe/common/datagen/**'
+      - 'build.gradle*'
+      - 'settings.gradle*'
+      - 'gradle.properties'
+      - 'gradle/**'
+      - 'gradlew'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: datagen-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  datagen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: setup java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      - name: datagen
+        run: ./gradlew runData --no-daemon
+
+      - name: Commit generated data
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+           
+          # ⚠️ 换成你项目实际的生成目录
+          git add src/generated/resources
+            
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+            
+          git commit -m "chore: regenerate data [skip ci]"
+          git push
