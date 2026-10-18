@@ -21,4 +21,7 @@ hs_err_pid*
 run
 run-data
 
+# datagen
+/src/generated/resources/*
+
 !.idea/.name
