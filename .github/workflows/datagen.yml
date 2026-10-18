@@ -56,13 +56,15 @@ jobs:
         run: ./gradlew runData --no-daemon
 
       - name: Commit generated data
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: |
+          github.ref == 'refs/heads/main' &&
+          (github.event_name == 'push' ||(github.event_name == 'workflow_dispatch' && inputs.commit))
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
            
           # ⚠️ 换成你项目实际的生成目录
-          git add src/generated/resources
+          git add -f src/generated/resources
             
           if git diff --staged --quiet; then
             echo "No changes to commit"
