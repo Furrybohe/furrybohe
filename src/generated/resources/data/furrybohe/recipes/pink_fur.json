@@ -1,6 +1,5 @@
 {
   "type": "furrybohe:fur_recipe",
-  "chance": 0.1,
   "cotton": {
     "item": "furrybohe:cotton"
   },

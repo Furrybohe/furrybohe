@@ -6,13 +6,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
 public class FurryBoHeCreativeTabsRegister {
     public static final DeferredRegister<CreativeModeTab> TABS_REGISTER = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, FurryBoHe.MODID);
     
-    public static final Supplier<CreativeModeTab> FURRY_BO_HE_TAB =
+    public static final RegistryObject<CreativeModeTab> FURRY_BO_HE_TAB =
             TABS_REGISTER.register(
                     "furry_bo_he_tab",
                     () -> CreativeModeTab.builder()

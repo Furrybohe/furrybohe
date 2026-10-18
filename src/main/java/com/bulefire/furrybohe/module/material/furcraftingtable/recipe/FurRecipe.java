@@ -2,6 +2,7 @@ package com.bulefire.furrybohe.module.material.furcraftingtable.recipe;
 
 import com.bulefire.furrybohe.common.registry.FurryBoHeRecipeSerializerRegister;
 import com.bulefire.furrybohe.common.registry.FurryBoHeRecipesRegister;
+import com.bulefire.furrybohe.module.material.furcraftingtable.block.FurCraftingSlots;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -55,9 +56,9 @@ public class FurRecipe implements Recipe<Container> {
     }
     
     public @Nullable CraftPlan plan(@NotNull Container in) {
-        ItemStack leatherStack = in.getItem(0);
-        ItemStack filler = in.getItem(1);
-        ItemStack dyeStack = in.getItem(2);
+        ItemStack leatherStack = in.getItem(FurCraftingSlots.LEATHER);
+        ItemStack filler = in.getItem(FurCraftingSlots.FILLER);
+        ItemStack dyeStack = in.getItem(FurCraftingSlots.DYE);
         
         if (!leather.test(leatherStack) || leatherStack.getCount() < 1) return null;
         if (!dye.test(dyeStack) || dyeStack.getCount() < 1) return null;
@@ -81,7 +82,12 @@ public class FurRecipe implements Recipe<Container> {
     
     @Override
     public @NotNull ItemStack assemble(@NotNull Container container, @NotNull RegistryAccess ra) {
-        return result.copy();
+        CraftPlan plan = plan(container);
+        if (plan == null) return result.copy();
+        ItemStack desired = result.copy();
+        desired.setDamageValue((int) (desired.getMaxDamage() * plan.damageCount() * 0.1));
+        desired.setDamageValue((int) (desired.getMaxDamage() * plan.damageCount() * 0.1));
+        return desired;
     }
     
     @Override
@@ -91,7 +97,7 @@ public class FurRecipe implements Recipe<Container> {
     
     @Override
     public @NotNull ItemStack getResultItem(@NotNull RegistryAccess ra) {
-        return result;
+        return result.copy();
     }
     
     @Override

@@ -6,7 +6,7 @@
     {"item": "minecraft:book"}
   ],
   "result": {
-    "item": "furrybohe:fursuit_manualfursuit_manual",
+    "item": "furrybohe:fursuit_manual",
     "nbt": "{\"furrybohe:level\": 0, \"furrybohe:entrustment\": 0b}",
     "count": 1
   }

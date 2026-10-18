@@ -33,7 +33,7 @@ public class FursuitMakerTrades {
         trades.get(1).add((trader, rand) -> {
             ItemStack bp = new ItemStack(FurryBoHeItemsRegister.FURSUIT_BLUEPRINTS_REGISTER.get(), 1);
             
-            bp.getOrCreateTag().putString(FursuitBlueprintsItem.DESIGNED, FursuitBlueprintsItem.EMPTY);
+            bp.getOrCreateTag().putString(FursuitBlueprintsItem.STATUS_KEY, FursuitBlueprintsItem.EMPTY);
             
             return RegistryUtil.createDefaultOffer(new ItemStack(Items.EMERALD, 7), bp);
         });

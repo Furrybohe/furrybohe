@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class FursuitBlueprintsItem extends Item {
-    private static final String STATUS_KEY = FurryBoHe.MODID + ":status";
+    public static final String STATUS_KEY = FurryBoHe.MODID + ":status";
     public static final String EMPTY = "empty";
     public static final String DESIGNED = "designed";
     public static final String PRESET = "preset";
