@@ -62,7 +62,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
            
           # ⚠️ 换成你项目实际的生成目录
-          git add src/generated/resources
+          git add -f src/generated/resources
             
           if git diff --staged --quiet; then
             echo "No changes to commit"
