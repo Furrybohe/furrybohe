@@ -1,0 +1,67 @@
+name: Build
+
+# 每次 push（任意分支）与每个 PR 都构建；bot 的 [skip ci] 提交自动跳过。
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# 同一分支/PR 只保留最新一次构建：push 与 PR 事件重复触发时，后到的会取消先到的。
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Gradle build
+    if: ${{ !contains(github.event.head_commit.message || '', '[skip ci]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 1
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v6.2.0
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6.4.1
+        with:
+          # 增强缓存（默认）：细粒度缓存 + 内容去重 + 智能清理；公共仓库免费
+          cache-provider: enhanced
+          # 默认只在默认分支写缓存；这里允许所有分支写入，分支内重复推送也能复用
+          cache-read-only: false
+          # 构建成功后清理 Gradle User Home 里不再使用的文件，减小缓存体积
+          cache-cleanup: on-success
+
+      - name: Build
+        run: ./gradlew build --build-cache --no-daemon --stacktrace --console=plain
+
+      - name: Upload jar
+        if: success()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: furrybohe-${{ github.run_number }}
+          path: build/libs/*.jar
+          if-no-files-found: warn
+          retention-days: 7
+          # jar 本身已压缩，再压缩只是浪费时间
+          compression-level: 0
+
+      - name: Upload reports on failure
+        if: failure()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: reports-${{ github.run_number }}
+          path: build/reports/**
+          if-no-files-found: ignore
+          retention-days: 7
