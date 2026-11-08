@@ -2,6 +2,7 @@ package com.bulefire.furrybohe.common.registry;
 
 import com.bulefire.furrybohe.FurryBoHe;
 import com.bulefire.furrybohe.module.material.furcraftingtable.block.FurCraftingTableBlock;
+import com.bulefire.furrybohe.module.material.resin_collector.block.ResinCollectorBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -19,4 +20,11 @@ public class FurryBoHeBlockEntityRegister {
                                            )
                                                    .build(null)
             );
+    
+    public static final RegistryObject<BlockEntityType<?>> RESIN_COLLECTOR_ENTITY_REGISTER =
+            BLOCK_ENTITIES_REGISTER.register("resin_collector_entity", () ->
+                    BlockEntityType.Builder
+                            .of(ResinCollectorBlock.ResinCollectorBlockEntity::new,
+                                FurryBoHeBlocksRegister.RESIN_COLLECTOR_REGISTER.get()
+                            ).build(null));
 }

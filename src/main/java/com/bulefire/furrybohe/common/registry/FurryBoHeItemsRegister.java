@@ -5,10 +5,7 @@ import com.bulefire.furrybohe.module.document.blueprints.item.FursuitBlueprintsI
 import com.bulefire.furrybohe.module.document.manual.item.FursuitManualItem;
 import com.bulefire.furrybohe.module.fursuit.dtd.item.FursuitDTDItem;
 import com.bulefire.furrybohe.module.material.fur.item.FurItem;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -40,11 +37,13 @@ public class FurryBoHeItemsRegister {
     /** 雕刻树脂碎片注册【指甲和牙齿都是这个】 */
     public static final RegistryObject<Item> CARVED_RESIN_FRAGMENT_REGISTER = register("carved_resin_fragment");
     /** 一瓶树脂注册 */
-    public static final RegistryObject<Item> BOTTLE_OF_RESIN_REGISTER = register("bottle_of_resin");
+    public static final RegistryObject<Item> BOTTLE_OF_RESIN_REGISTER = register("bottle_of_resin",
+                                                                                 () -> new Item(new Item.Properties().stacksTo(16).craftRemainder(Items.GLASS_BOTTLE)));
     /** 棉花注册 */
     public static final RegistryObject<Item> COTTON_REGISTER = register("cotton");
     /** 棉花种子注册 */
-    public static final RegistryObject<Item> COTTON_SEEDS_REGISTER = register("cotton_seeds");
+    public static final RegistryObject<Item> COTTON_SEEDS_REGISTER = register("cotton_seeds",
+                                                                              () -> new ItemNameBlockItem(FurryBoHeBlocksRegister.COTTON_CROP_REGISTER.get(), new Item.Properties()));
     /** 有色毛布注册【键为染料颜色名】 */
     public static final Map<String, RegistryObject<Item>> COLOR_FUR_REGISTER = new HashMap<>(16, 1.0f);
     

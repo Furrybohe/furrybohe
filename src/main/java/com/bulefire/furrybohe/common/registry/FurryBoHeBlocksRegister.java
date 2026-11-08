@@ -1,6 +1,7 @@
 package com.bulefire.furrybohe.common.registry;
 
 import com.bulefire.furrybohe.FurryBoHe;
+import com.bulefire.furrybohe.module.material.cotton.block.CottonCropBlock;
 import com.bulefire.furrybohe.module.material.furcraftingtable.block.FurCraftingTableBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -72,13 +73,13 @@ public class FurryBoHeBlocksRegister {
     /** 棉花植株注册【参考原版小麦 WHEAT：作物、无碰撞、随机刻、瞬间破坏】 */
     public static final RegistryObject<Block> COTTON_CROP_REGISTER = register(
             "cotton_crop",
-            () -> new Block(BlockBehaviour.Properties.of()
-                                                     .mapColor(MapColor.PLANT)
-                                                     .noCollission()
-                                                     .randomTicks()
-                                                     .instabreak()
-                                                     .sound(SoundType.CROP)
-                                                     .pushReaction(PushReaction.DESTROY))
+            () -> new CottonCropBlock(BlockBehaviour.Properties.of()
+                                                               .mapColor(MapColor.PLANT)
+                                                               .noCollission()
+                                                               .randomTicks()
+                                                               .instabreak()
+                                                               .sound(SoundType.CROP)
+                                                               .pushReaction(PushReaction.DESTROY))
     );
     
     public static @NotNull RegistryObject<Block> register(String id, Supplier<Block> block) {
