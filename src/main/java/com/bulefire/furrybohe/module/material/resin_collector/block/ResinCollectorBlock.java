@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -64,9 +65,14 @@ public class ResinCollectorBlock extends BaseEntityBlock {
         return InteractionResult.CONSUME;
     }
     
+    @Override
+    public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
+        return RenderShape.MODEL;
+    }
+    
     public static class ResinCollectorBlockEntity extends BlockEntity {
         
-        private static final int TICKS_PER_RESIN = 20*60;
+        private static final int TICKS_PER_RESIN = 20;
         private static final int MAX_RESIN = 1;
         
         private int resinAmount = 0;
@@ -103,7 +109,7 @@ public class ResinCollectorBlock extends BaseEntityBlock {
         }
         
         private static boolean canCollectResin(Level level, BlockPos pos) {
-            return false;
+            return true;
         }
         
         public boolean isReady() {

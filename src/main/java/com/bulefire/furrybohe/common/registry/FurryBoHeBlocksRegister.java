@@ -3,6 +3,7 @@ package com.bulefire.furrybohe.common.registry;
 import com.bulefire.furrybohe.FurryBoHe;
 import com.bulefire.furrybohe.module.material.cotton.block.CottonCropBlock;
 import com.bulefire.furrybohe.module.material.furcraftingtable.block.FurCraftingTableBlock;
+import com.bulefire.furrybohe.module.material.resin_collector.block.ResinCollectorBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -26,13 +27,13 @@ public class FurryBoHeBlocksRegister {
     /** 兽装工作站注册 */
     public static final RegistryObject<Block> FURSUIT_WORKSTATION_REGISTER = register(
             "fursuit_workstation",
-            () -> new Block(BlockBehaviour.Properties.of().strength(3.0F, 3.0F))
+            () -> new Block(BlockBehaviour.Properties.of().strength(3.0F, 3.0F).noOcclusion())
     );
     
     /** 树脂收集器注册【参考原版蜂巢 BEEHIVE：木质、附着于树、可右键交互】 */
     public static final RegistryObject<Block> RESIN_COLLECTOR_REGISTER = register(
             "resin_collector",
-            () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(0.6F).sound(SoundType.WOOD).ignitedByLava())
+            () -> new ResinCollectorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(0.6F).sound(SoundType.WOOD).ignitedByLava().noCollission())
     );
     
     /** 毛布制作台注册【参考原版工作台 CRAFTING_TABLE / 织布机 LOOM：木质工作台】 */

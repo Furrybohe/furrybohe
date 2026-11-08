@@ -249,7 +249,7 @@ public class FurryBoHeItemsRegister {
     /** 各色兽装部位方块物品注册 */
     public static final RegistryObject<Item> FURSUIT_PART_DISPLAY_REGISTER = register(FurryBoHeBlocksRegister.FURSUIT_PART_DISPLAY_REGISTER);
     /** 棉花植株方块物品注册 */
-    public static final RegistryObject<Item> COTTON_CROP_REGISTER = register(FurryBoHeBlocksRegister.COTTON_CROP_REGISTER);
+//    public static final RegistryObject<Item> COTTON_CROP_REGISTER = register(FurryBoHeBlocksRegister.COTTON_CROP_REGISTER);
     
     // ================================================================
     // 联动内容（ToNeko）
