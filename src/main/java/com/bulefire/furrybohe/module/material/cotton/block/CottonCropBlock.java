@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.jetbrains.annotations.NotNull;
 
 public class CottonCropBlock extends CropBlock {
-    private static final int MX_AGE = 6;
+    private static final int MX_AGE = 3;
     
     public static final IntegerProperty AGE = IntegerProperty.create("age", 0, MX_AGE);
     

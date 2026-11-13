@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "furrybohe:block/resin_collector_fill0",
+    "down": "furrybohe:block/resin_collector_down",
+    "up": "furrybohe:block/resin_collector_up",
+    "north": "furrybohe:block/resin_collector_front",
+    "south": "furrybohe:block/resin_collector_back",
+    "west": "furrybohe:block/resin_collector_fill0",
+    "east": "furrybohe:block/resin_collector_fill0"
+  }
+}

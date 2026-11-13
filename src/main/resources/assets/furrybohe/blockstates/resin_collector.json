@@ -1,7 +1,28 @@
 {
   "variants": {
-    "": {
-      "model": "furrybohe:block/resin_collector"
-    }
+    "stage=0,resin_amount=0,facing=north": { "model": "furrybohe:block/resin_collector_stage0" },
+    "stage=0,resin_amount=0,facing=east":  { "model": "furrybohe:block/resin_collector_stage0", "y": 90 },
+    "stage=0,resin_amount=0,facing=south": { "model": "furrybohe:block/resin_collector_stage0", "y": 180 },
+    "stage=0,resin_amount=0,facing=west":  { "model": "furrybohe:block/resin_collector_stage0", "y": 270 },
+
+    "stage=1,resin_amount=0,facing=north": { "model": "furrybohe:block/resin_collector_stage1" },
+    "stage=1,resin_amount=0,facing=east":  { "model": "furrybohe:block/resin_collector_stage1", "y": 90 },
+    "stage=1,resin_amount=0,facing=south": { "model": "furrybohe:block/resin_collector_stage1", "y": 180 },
+    "stage=1,resin_amount=0,facing=west":  { "model": "furrybohe:block/resin_collector_stage1", "y": 270 },
+
+    "stage=2,resin_amount=0,facing=north": { "model": "furrybohe:block/resin_collector_stage2" },
+    "stage=2,resin_amount=0,facing=east":  { "model": "furrybohe:block/resin_collector_stage2", "y": 90 },
+    "stage=2,resin_amount=0,facing=south": { "model": "furrybohe:block/resin_collector_stage2", "y": 180 },
+    "stage=2,resin_amount=0,facing=west":  { "model": "furrybohe:block/resin_collector_stage2", "y": 270 },
+
+    "stage=3,resin_amount=0,facing=north": { "model": "furrybohe:block/resin_collector_stage3" },
+    "stage=3,resin_amount=0,facing=east":  { "model": "furrybohe:block/resin_collector_stage3", "y": 90 },
+    "stage=3,resin_amount=0,facing=south": { "model": "furrybohe:block/resin_collector_stage3", "y": 180 },
+    "stage=3,resin_amount=0,facing=west":  { "model": "furrybohe:block/resin_collector_stage3", "y": 270 },
+
+    "resin_amount=1,facing=north": { "model": "furrybohe:block/resin_collector_stage3" },
+    "resin_amount=1,facing=east":  { "model": "furrybohe:block/resin_collector_stage3", "y": 90 },
+    "resin_amount=1,facing=south": { "model": "furrybohe:block/resin_collector_stage3", "y": 180 },
+    "resin_amount=1,facing=west":  { "model": "furrybohe:block/resin_collector_stage3", "y": 270 }
   }
 }

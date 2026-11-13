@@ -33,7 +33,7 @@ public class FurryBoHeBlocksRegister {
     /** 树脂收集器注册【参考原版蜂巢 BEEHIVE：木质、附着于树、可右键交互】 */
     public static final RegistryObject<Block> RESIN_COLLECTOR_REGISTER = register(
             "resin_collector",
-            () -> new ResinCollectorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(0.6F).sound(SoundType.WOOD).ignitedByLava().noCollission())
+            () -> new ResinCollectorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(0.6F).sound(SoundType.WOOD).ignitedByLava().randomTicks())
     );
     
     /** 毛布制作台注册【参考原版工作台 CRAFTING_TABLE / 织布机 LOOM：木质工作台】 */
