@@ -2,7 +2,7 @@ package com.bulefire.furrybohe.common.registry;
 
 import com.bulefire.furrybohe.FurryBoHe;
 import com.bulefire.furrybohe.module.material.furcraftingtable.block.FurCraftingTableBlock;
-import com.bulefire.furrybohe.module.material.resin_collector.block.ResinCollectorBlock;
+import com.bulefire.furrybohe.module.material.resincollector.block.ResinCollectorBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

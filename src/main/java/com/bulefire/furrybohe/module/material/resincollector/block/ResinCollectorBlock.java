@@ -1,4 +1,4 @@
-package com.bulefire.furrybohe.module.material.resin_collector.block;
+package com.bulefire.furrybohe.module.material.resincollector.block;
 
 import com.bulefire.furrybohe.common.registry.FurryBoHeBlockEntityRegister;
 import com.bulefire.furrybohe.common.registry.FurryBoHeItemsRegister;
@@ -18,17 +18,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
@@ -90,33 +89,102 @@ public class ResinCollectorBlock extends HorizontalDirectionalBlock implements E
     public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof ResinCollectorBlockEntity be)) return InteractionResult.PASS;
         
-        ItemStack held = player.getItemInHand(hand);
+        InteractionHand otherHand = hand == InteractionHand.MAIN_HAND
+                ? InteractionHand.OFF_HAND
+                : InteractionHand.MAIN_HAND;
         
-        if (!held.is(Items.GLASS_BOTTLE)) return InteractionResult.PASS;
-        
-        if (level.isClientSide) return InteractionResult.SUCCESS;
-        
-        if (!be.isReady()) {
-            return InteractionResult.CONSUME;
+        for (InteractionHand h : new InteractionHand[]{hand, otherHand}) {
+            ItemStack stack = player.getItemInHand(h);
+            InteractionResult result = InteractionResult.PASS;
+            
+            if (stack.is(Items.GLASS_BOTTLE))
+                result = glassBottle(state, level, pos, player, h, hit, stack, be);
+            
+            if (stack.is(Items.SLIME_BALL))
+                result = slimeBall(state, level, pos, player, h, hit, stack, be);
+            
+            if (result.consumesAction()) {
+                if (h != hand) {
+                    player.swing(h, true);
+                    return InteractionResult.CONSUME;
+                }
+                return InteractionResult.SUCCESS;
+            }
         }
+        return InteractionResult.CONSUME;
         
-        if (!player.getAbilities().instabuild) held.shrink(1);
+//        ItemStack held = player.getItemInHand(hand);
+//
+//        if (held.is(Items.GLASS_BOTTLE)) return glassBottle(state, level, pos, player, hand, hit, held, be);
+//        if (held.is(Items.SLIME_BALL)) return slimeBall(state, level, pos, player, hand, hit, held, be);
+//
+//        return InteractionResult.PASS;
+    }
+    
+    public InteractionResult glassBottle(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit, @NotNull ItemStack held, @NotNull ResinCollectorBlockEntity be) {
+        if (level.isClientSide) return InteractionResult.PASS;
+        var result = collect(be, !player.getAbilities().instabuild, held, state, level, pos);
+        if (!result.isEmpty() && !player.getInventory().add(result)) player.drop(result, false);
+        return result == ItemStack.EMPTY ? InteractionResult.PASS : InteractionResult.SUCCESS;
+    }
+    
+    public InteractionResult slimeBall(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit, @NotNull ItemStack held, @NotNull ResinCollectorBlockEntity be) {
+        if (level.isClientSide) return InteractionResult.PASS;
+        if (!(level instanceof ServerLevel serverLevel)) return InteractionResult.PASS;
+        ItemStack result = fill(be, !player.getAbilities().instabuild, held, state, serverLevel, pos);
+        return result == ItemStack.EMPTY ? InteractionResult.PASS : InteractionResult.SUCCESS;
+    }
+    
+    
+    public ItemStack fill(@NotNull ResinCollectorBlockEntity be, boolean consume, ItemStack held, BlockState state, ServerLevel serverLevel, BlockPos pos) {
+        boolean flag = false;
+        while (!be.isReady() && ResinCollectorBlockEntity.canCollectResin(serverLevel, pos)) {
+            randomTick(state, serverLevel, pos, serverLevel.getRandom());
+            flag = true;
+        }
+        if (flag) {
+            if (consume) held.shrink(1);
+            serverLevel.playSound(null, pos, SoundEvents.POINTED_DRIPSTONE_DRIP_WATER_INTO_CAULDRON, SoundSource.BLOCKS, 1.0F, 1.0F);
+            return held;
+        }
+        return ItemStack.EMPTY;
+    }
+    
+    public ItemStack collect(@NotNull ResinCollectorBlockEntity be, boolean consume, ItemStack held, BlockState state, Level level, BlockPos pos) {
+        if (!be.isReady()) return ItemStack.EMPTY;
+        
+        if (consume) held.shrink(1);
         
         ItemStack result = new ItemStack(FurryBoHeItemsRegister.BOTTLE_OF_RESIN_REGISTER.get(), 1);
-        if (!player.getInventory().add(result)) player.drop(result, false);
         
-        int[] v =be.consumeResin();
+        int[] v = be.consumeResin();
         BlockState newState = state.setValue(STAGE, v[0]).setValue(RESIN_AMOUNT, v[1]);
         level.setBlockAndUpdate(pos, newState);
-        level.playSound(null, pos, SoundEvents.BOTTLE_FILL,
-                        SoundSource.BLOCKS, 1.0F, 1.0F);
-        
-        return InteractionResult.CONSUME;
+        level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+        return result;
     }
     
     @Override
-    public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
-        return RenderShape.MODEL;
+    public void onNeighborChange(BlockState state, LevelReader level, BlockPos pos, BlockPos neighbor) {
+        super.onNeighborChange(state, level, pos, neighbor);
+    }
+    
+    @Override
+    public boolean hasAnalogOutputSignal(@NotNull BlockState state) {
+        return true;
+    }
+    
+    @Override
+    public int getAnalogOutputSignal(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof ResinCollectorBlockEntity be)) return 0;
+        if (be.resinAmount == MAX_RESIN) return 15;
+        return switch (be.stage) {
+            case 1 -> 5;
+            case 2 -> 10;
+            case 3 -> 15;
+            default -> 0;
+        };
     }
     
     public static class ResinCollectorBlockEntity extends BlockEntity {
@@ -284,6 +352,8 @@ public class ResinCollectorBlock extends HorizontalDirectionalBlock implements E
             }
             return new int[]{stage, resinAmount};
         }
+        
+        
         
         @Override
         protected void saveAdditional(@NotNull CompoundTag tag) {
