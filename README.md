@@ -8,7 +8,7 @@
 
 English · [简体中文](README.zh-CN.md)
 
-[Quick Start](#-quick-start) · [Contribute](#-contribute) · [Documentation](#-documentation) · [License](#-license)
+[Quick Start](#quick-start) · [Contribute](#contribute) · [Documentation](#documentation) · [License](#license)
 
 [![Java](https://img.shields.io/badge/Java-17+-blue)](https://www.oracle.com/cn/java/technologies/downloads/#java17)
 [![](https://img.shields.io/modrinth/game-versions/furry_bohe)](https://modrinth.com/mod/furry_bohe)

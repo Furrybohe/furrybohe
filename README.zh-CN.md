@@ -8,7 +8,7 @@
 
 [English](README.md) · 简体中文
 
-[快速开始](#-快速开始) · [贡献](#-贡献) · [文档](#-文档) · [许可证](#-许可证)
+[快速开始](#快速开始) · [贡献](#贡献) · [文档](#文档) · [许可证](#许可证)
 
 [![Java](https://img.shields.io/badge/Java-17+-blue)](https://www.oracle.com/cn/java/technologies/downloads/#java17)
 [![](https://img.shields.io/modrinth/game-versions/furry_bohe)](https://modrinth.com/mod/furry_bohe)
