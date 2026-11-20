@@ -22,12 +22,14 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
@@ -189,7 +191,7 @@ public class ResinCollectorBlock extends HorizontalDirectionalBlock implements E
     
     public static class ResinCollectorBlockEntity extends BlockEntity {
         
-        private static final int TRUNK_SCAN_HEIGHT = 12;
+        private static final int TRUNK_SCAN_HEIGHT = 120;
         private static final int LEAF_SCAN_RADIUS  = 5;
         
         private static final Set<ResourceKey<Biome>> ALLOWED_BIOMES = Set.of(
@@ -336,9 +338,17 @@ public class ResinCollectorBlock extends HorizontalDirectionalBlock implements E
         
         // endregion
         
-        private static boolean canCollectResin(Level level, BlockPos pos) {
+        private static boolean canCollectResin(@NotNull Level level, BlockPos pos) {
+            // 启发式算法：效果不佳
+//            BlockPos host = findNaturalLogHost(level, pos);
+//            return host != null && isPartOfNaturalTree(level, host);
             BlockPos host = findNaturalLogHost(level, pos);
-            return host != null && isPartOfNaturalTree(level, host);
+            if (host == null) return false;
+            if (!isNaturalLog(level.getBlockState(host))) return false;
+            BlockState blockState = level.getBlockState(host);
+            if (!isNaturalLog(blockState)) return false;
+            if (!blockState.hasProperty(MixinProperties.NATURAL)) return true;
+            return blockState.getValue(MixinProperties.NATURAL);
         }
         
         public boolean isReady() {
@@ -367,6 +377,10 @@ public class ResinCollectorBlock extends HorizontalDirectionalBlock implements E
             super.load(tag);
             resinAmount = tag.getInt("resin_amount");
             stage = tag.getInt("stage");
+        }
+        
+        public static class MixinProperties {
+            public static final BooleanProperty NATURAL = BooleanProperty.create("natural");
         }
     }
 }
