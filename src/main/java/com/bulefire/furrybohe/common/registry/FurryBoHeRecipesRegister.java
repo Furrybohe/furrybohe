@@ -14,6 +14,6 @@ public class FurryBoHeRecipesRegister {
     public static final RegistryObject<RecipeType<FurRecipe>> FUR_RECIPE_TYPE_REGISTER =
             RECIPES_REGISTER.register(
                     "fur_recipe", () ->
-                            RecipeType.simple(new ResourceLocation(FurryBoHe.MODID, "fur_recipe"))
+                            RecipeType.simple(ResourceLocation.fromNamespaceAndPath(FurryBoHe.MODID, "fur_recipe"))
             );
 }

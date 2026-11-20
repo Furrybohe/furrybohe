@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(Dist.CLIENT)
 public class FurCraftingTableScreen extends AbstractContainerScreen<FurCraftingTableMenu> {
-    private static final ResourceLocation BG_TEXTURE = new ResourceLocation(FurryBoHe.MODID, "textures/gui/fur_crafting_table.png");
+    private static final ResourceLocation BG_TEXTURE = ResourceLocation.fromNamespaceAndPath(FurryBoHe.MODID, "textures/gui/fur_crafting_table.png");
     
     public FurCraftingTableScreen(FurCraftingTableMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);

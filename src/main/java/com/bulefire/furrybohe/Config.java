@@ -16,7 +16,7 @@ public class Config {
     static final ForgeConfigSpec SPEC = BUILDER.build();
     
     private static boolean validateItemName(final Object obj) {
-        return obj instanceof final String itemName && ForgeRegistries.ITEMS.containsKey(new ResourceLocation(itemName));
+        return obj instanceof final String itemName && ForgeRegistries.ITEMS.containsKey(ResourceLocation.parse(itemName));
     }
     
     @SubscribeEvent

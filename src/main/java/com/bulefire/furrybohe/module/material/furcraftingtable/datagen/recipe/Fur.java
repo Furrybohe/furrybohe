@@ -28,7 +28,7 @@ public class Fur {
             Item fur = FurryBoHeItemsRegister.COLOR_FUR_REGISTER.get(color.getName()).get();
             
             consumer.accept(new FurFinishedRecipe(
-                    new ResourceLocation(FurryBoHe.MODID, color.getName() + "_fur"),
+                    ResourceLocation.fromNamespaceAndPath(FurryBoHe.MODID, color.getName() + "_fur"),
                     leather, cotton, wool, Ingredient.of(dye),
                     FurRecipe.DEFAULT_COTTON_COUNT, FurRecipe.DEFAULT_WOOL_COUNT,
                     new ItemStack(fur)
@@ -75,7 +75,7 @@ public class Fur {
         
         @Override
         public @NotNull ResourceLocation getAdvancementId() {
-            return new ResourceLocation(id.getNamespace(), "recipes/" + id.getPath());
+            return ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "recipes/" + id.getPath());
         }
     }
 }

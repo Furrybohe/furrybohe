@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -21,8 +22,8 @@ public class FurryBoHe {
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
     
-    public FurryBoHe() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public FurryBoHe(@NotNull FMLJavaModLoadingContext modLoadingContext) {
+        IEventBus modEventBus = modLoadingContext.getModEventBus();
         
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -38,7 +39,7 @@ public class FurryBoHe {
         FurryBoHeRecipeSerializerRegister.RECIPE_SERIALIZERS_REGISTER.register(modEventBus);
         
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        modLoadingContext.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
     
     private void commonSetup(final FMLCommonSetupEvent event) {

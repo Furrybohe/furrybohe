@@ -28,7 +28,7 @@ public class FursuitEyes {
                                   .requires(Items.PAPER)
                                   .requires(FurryBoHeItemsRegister.RESIN_FRAGMENT_REGISTER.get())
                                   .unlockedBy("has_" + color + "_dye", has.apply(dye))
-                                  .save(consumer, new ResourceLocation("furrybohe", "fursuit_" + color.getName() + "_eyes"));
+                                  .save(consumer, ResourceLocation.fromNamespaceAndPath("furrybohe", "fursuit_" + color.getName() + "_eyes"));
         }
     }
 }
