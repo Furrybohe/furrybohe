@@ -22,10 +22,14 @@ public abstract class AbstractFursuitDTDItem extends ArmorItem {
     public static final String SHAPED_KEY = FurryBoHe.MODID + ":shaped";
     public static final String WEAR_TICKS_KEY = FurryBoHe.MODID + ":wear_ticks";
     private static final int FIXED_TICKS = 200;
+    private static final int PER_FAILURE_DAMAGE = 50;
+    private static final int RESIN_RETURN_MIN = 1;
+    private static final int RESIN_RETURN_MAX_EXCLUSIVE = 4;
     private static final UUID DTD_UUID = UUID.fromString("01a1f98a-1fcc-75f8-b584-edcadfdc5f29");
     
     
     private static final Map<EquipmentSlot, List<Item>> DTD_SLOTS = new HashMap<>();
+    private static final Map<UUID, Integer> PENDING_RESIN = new HashMap<>();
     
     public AbstractFursuitDTDItem(ArmorMaterial material, Type type, Properties properties) {
         super(material, type, properties);
@@ -35,11 +39,18 @@ public abstract class AbstractFursuitDTDItem extends ArmorItem {
     public void onInventoryTick(@NotNull ItemStack stack, @NotNull Level level, Player player, int slotIndex, int selectedIndex) {
         if (level.isClientSide) return;
         if (isShaped(stack)) return;
-        if (player.getItemBySlot(getEquipmentSlot()) != stack) return;
         
+        if (player.getItemBySlot(getEquipmentSlot()) != stack) {
+            CompoundTag tag = stack.getTag();
+            if (tag != null && tag.getInt(WEAR_TICKS_KEY) > 0) {
+                settleOnUnequip(stack, player);
+            }
+            return;
+        }
+
         CompoundTag tag = stack.getOrCreateTag();
         int ticks = tag.getInt(WEAR_TICKS_KEY) + 1;
-        
+
         if (ticks >= FIXED_TICKS) {
             tag.putBoolean(SHAPED_KEY, true);
             tag.remove(WEAR_TICKS_KEY);
@@ -48,9 +59,31 @@ public abstract class AbstractFursuitDTDItem extends ArmorItem {
         }
     }
     
-    public static boolean isShaped(@NotNull ItemStack stack) {
+    public static void settleOnUnequip(@NotNull ItemStack stack, @NotNull Player player) {
         CompoundTag tag = stack.getOrCreateTag();
-        return tag.getBoolean(SHAPED_KEY);
+        tag.remove(WEAR_TICKS_KEY);
+        int newDamage = stack.getDamageValue() + PER_FAILURE_DAMAGE;
+        if (newDamage >= stack.getMaxDamage()) {
+            stack.shrink(stack.getCount());
+        } else {
+            stack.setDamageValue(newDamage);
+        }
+
+        int resinCount = player.getRandom().nextInt(RESIN_RETURN_MIN, RESIN_RETURN_MAX_EXCLUSIVE);
+        PENDING_RESIN.merge(player.getUUID(), resinCount, Integer::sum);
+    }
+    
+    public static void flushPendingResin(@NotNull Player player) {
+        Integer count = PENDING_RESIN.remove(player.getUUID());
+        if (count == null || count <= 0) return;
+        player.getInventory().placeItemBackInInventory(
+                new ItemStack(FurryBoHeItemsRegister.RESIN_REGISTER.get(), count)
+        );
+    }
+
+    public static boolean isShaped(@NotNull ItemStack stack) {
+        CompoundTag tag = stack.getTag();
+        return tag != null && tag.getBoolean(SHAPED_KEY);
     }
     
     public static void setShaped(@NotNull ItemStack stack, boolean shaped) {
@@ -94,29 +127,10 @@ public abstract class AbstractFursuitDTDItem extends ArmorItem {
         return false;
     }
     
-    @Contract("_, _ -> new")
-    public static @NotNull ItemStack @NotNull [] getLivingResult(@NotNull ItemStack item, RandomSource random) {
-        CompoundTag tag = item.getOrCreateTag();
-        if (tag.contains(SHAPED_KEY) && tag.getBoolean(SHAPED_KEY)) return new ItemStack[]{item};
-        int ticks = tag.getInt(WEAR_TICKS_KEY);
-        if (ticks >= FIXED_TICKS) return new ItemStack[]{item};
-        
-        item.getOrCreateTag().putInt(WEAR_TICKS_KEY, 0);
-        item.setDamageValue(50);
-        int resinCount = random.nextInt(1,4);
-        return new ItemStack[]{item, new ItemStack(FurryBoHeItemsRegister.RESIN_REGISTER.get(), resinCount)};
-    }
-    
-    public static boolean isSameDTD(@NotNull ItemStack stack1, @NotNull ItemStack stack2) {
-        return stack1.getItem() instanceof AbstractFursuitDTDItem &&
-                stack2.getItem() instanceof AbstractFursuitDTDItem &&
-                stack1.getDamageValue() == stack2.getDamageValue();
-    }
-    
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
         var modifiers = super.getAttributeModifiers(slot, stack);
-        if (!isWearingDTD(slot, stack)) return modifiers;
+        if (slot == null || !isWearingDTD(slot, stack)) return modifiers;
         Multimap<Attribute, AttributeModifier> newModifiers = HashMultimap.create(modifiers);
         newModifiers.put(
                 Attributes.MOVEMENT_SPEED,

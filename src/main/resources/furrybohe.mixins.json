@@ -5,7 +5,8 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "furrybohe.refmap.json",
   "mixins": [
-    "SpruceLogBlockMixin"
+    "SpruceLogBlockMixin",
+    "ItemStackSplitMixin"
   ],
   "client": [
   ],

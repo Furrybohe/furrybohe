@@ -7,11 +7,13 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.NotNull;
 
 @Mod.EventBusSubscriber(modid = FurryBoHe.MODID, value = Dist.CLIENT)
 public class FursuitDTDEventClientListener {
     @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
+    public static void onClientTick(TickEvent.@NotNull ClientTickEvent event) {
+        if (event.phase != TickEvent.Phase.END) return;
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.screen != null) return;
         
@@ -23,7 +25,7 @@ public class FursuitDTDEventClientListener {
             mc.options.keyJump.setDown(false);
             mc.options.keyShift.setDown(false);
             mc.options.keySprint.setDown(false);
-            
+
             mc.options.keyAttack.setDown(false);
             mc.options.keyUse.setDown(false);
         }

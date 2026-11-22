@@ -17,14 +17,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(RotatedPillarBlock.class)
 public class SpruceLogBlockMixin {
     @Inject(method = "createBlockStateDefinition(Lnet/minecraft/world/level/block/state/StateDefinition$Builder;)V", at = @At("HEAD"))
-    private void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> builder, CallbackInfo ci) {
+    private void furrybohe$createBlockStateDefinitionHEAD(StateDefinition.@NotNull Builder<Block, BlockState> builder, CallbackInfo ci) {
         builder.add(ResinCollectorBlock.ResinCollectorBlockEntity.MixinProperties.NATURAL);
     }
     
     @Inject(method = "getStateForPlacement(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/level/block/state/BlockState;",
             at = @At("RETURN"),
             cancellable=true)
-    private void place(BlockPlaceContext context, @NotNull CallbackInfoReturnable<BlockState> cir) {
+    private void furrybohe$getStateForPlacementRETURN(BlockPlaceContext context, @NotNull CallbackInfoReturnable<BlockState> cir) {
         if ((Block) (Object) this != Blocks.SPRUCE_LOG) return;
         
         BlockState bs = cir.getReturnValue();
