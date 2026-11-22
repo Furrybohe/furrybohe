@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.bulefire.furrybohe.mixin",
+  "package": "com.bulefire.furrybohe.common.mixin",
   "compatibilityLevel": "JAVA_8",
   "refmap": "furrybohe.refmap.json",
   "mixins": [

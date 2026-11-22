@@ -1,4 +1,4 @@
-package com.bulefire.furrybohe.mixin;
+package com.bulefire.furrybohe.common.mixin;
 
 import com.bulefire.furrybohe.module.fursuit.dtd.item.AbstractFursuitDTDItem;
 import net.minecraft.nbt.CompoundTag;

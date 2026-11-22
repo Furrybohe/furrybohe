@@ -1,4 +1,4 @@
-package com.bulefire.furrybohe.mixin;
+package com.bulefire.furrybohe.common.mixin;
 
 import com.bulefire.furrybohe.module.material.resincollector.block.ResinCollectorBlock;
 import net.minecraft.world.item.context.BlockPlaceContext;
