@@ -5,10 +5,12 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "furrybohe.refmap.json",
   "mixins": [
-    "SpruceLogBlockMixin",
-    "ItemStackSplitMixin"
+    "ItemStackSplitMixin",
+    "SpruceLogBlockMixin"
   ],
   "client": [
+    "LivingEntityRendererMixin",
+    "ItemInHandRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
