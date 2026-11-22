@@ -2,7 +2,8 @@ package com.bulefire.furrybohe.module.villager.fursuitmaker.trade;
 
 import com.bulefire.furrybohe.common.registry.FurryBoHeItemsRegister;
 import com.bulefire.furrybohe.module.document.blueprints.item.FursuitBlueprintsItem;
-import com.bulefire.furrybohe.module.fursuit.dtd.item.FursuitDTDItem;
+import com.bulefire.furrybohe.module.fursuit.dtd.item.FursuitBodyDTDItem;
+import com.bulefire.furrybohe.module.fursuit.dtd.item.FursuitStraightLegDTDItem;
 import com.bulefire.furrybohe.module.villager.util.RegistryUtil;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.world.entity.npc.VillagerTrades;
@@ -81,7 +82,7 @@ public class FursuitMakerTrades {
         trades.get(3).add((trader, rand) -> {
             ItemStack dtd = new ItemStack(FurryBoHeItemsRegister.FURSUIT_BODY_DTD_REGISTER.get(), 1);
             
-            FursuitDTDItem.setShaped(dtd, false);
+            FursuitBodyDTDItem.setShaped(dtd, false);
             
             return RegistryUtil.createDefaultOffer(new ItemStack(Items.EMERALD, 58), dtd);
         });
@@ -89,7 +90,7 @@ public class FursuitMakerTrades {
         trades.get(3).add((trader, rand) -> {
             ItemStack dtd = new ItemStack(FurryBoHeItemsRegister.FURSUIT_STRAIGHT_LEG_DTD_REGISTER.get(), 1);
             
-            FursuitDTDItem.setShaped(dtd, false);
+            FursuitStraightLegDTDItem.setShaped(dtd, false);
             
             return RegistryUtil.createDefaultOffer(new ItemStack(Items.EMERALD, 54), dtd);
         });

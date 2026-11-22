@@ -3,7 +3,9 @@ package com.bulefire.furrybohe.common.registry;
 import com.bulefire.furrybohe.FurryBoHe;
 import com.bulefire.furrybohe.module.document.blueprints.item.FursuitBlueprintsItem;
 import com.bulefire.furrybohe.module.document.manual.item.FursuitManualItem;
-import com.bulefire.furrybohe.module.fursuit.dtd.item.FursuitDTDItem;
+import com.bulefire.furrybohe.module.fursuit.dtd.item.FursuitBodyDTDItem;
+import com.bulefire.furrybohe.module.fursuit.dtd.item.FursuitCurvedLegDTDItem;
+import com.bulefire.furrybohe.module.fursuit.dtd.item.FursuitStraightLegDTDItem;
 import com.bulefire.furrybohe.module.material.fur.item.FurItem;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
@@ -123,22 +125,22 @@ public class FurryBoHeItemsRegister {
     public static final RegistryObject<Item> FURSUIT_BODY_DTD_REGISTER =
             register(
                     "fursuit_body_dtd",
-                    () -> new FursuitDTDItem(
-                            new Item.Properties().setNoRepair().stacksTo(1))
+                    () -> new FursuitBodyDTDItem(
+                            new Item.Properties().setNoRepair().durability(100))
             );
     /** 直腿DTD注册【定型与否由状态表示】 */
     public static final RegistryObject<Item> FURSUIT_STRAIGHT_LEG_DTD_REGISTER =
             register(
                     "fursuit_straight_leg_dtd",
-                    () -> new FursuitDTDItem(
-                            new Item.Properties().setNoRepair().stacksTo(1))
+                    () -> new FursuitStraightLegDTDItem(
+                            new Item.Properties().setNoRepair().durability(100))
             );
     /** 曲腿DTD注册【直腿DTD+树脂5，独立合成产物】 */
     public static final RegistryObject<Item> FURSUIT_CURVED_LEG_DTD_REGISTER =
             register(
                     "fursuit_curved_leg_dtd",
-                    () -> new FursuitDTDItem(
-                            new Item.Properties().setNoRepair().stacksTo(1))
+                    () -> new FursuitCurvedLegDTDItem(
+                            new Item.Properties().setNoRepair().durability(100))
             );
     
     // ================================================================
