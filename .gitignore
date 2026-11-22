@@ -29,3 +29,5 @@ run-data
 /.claude
 
 !.idea/.name
+
+/resources/白膜/*
