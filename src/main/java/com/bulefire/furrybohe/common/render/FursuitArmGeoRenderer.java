@@ -3,17 +3,29 @@ package com.bulefire.furrybohe.common.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
+import org.joml.Quaternionf;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.renderer.GeoObjectRenderer;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * 第一人称手臂渲染器。
@@ -45,6 +57,7 @@ public class FursuitArmGeoRenderer extends GeoObjectRenderer<FursuitArmGeoAnimat
         super(new FursuitArmGeoModel());
     }
 
+    /**
     public static void renderFirstPerson(@NotNull LocalPlayer player, float partialTick, PoseStack poseStack,
                                          MultiBufferSource.BufferSource bufferSource, int packedLight) {
         if (instance == null) {
@@ -125,10 +138,81 @@ public class FursuitArmGeoRenderer extends GeoObjectRenderer<FursuitArmGeoAnimat
         setArmVisible(model.getBone("LeftArm").orElse(null), leftArm);
     }
 
+    **/
+
     /** 传 false 时整条手臂（含前臂、手）都不画。 */
     private static void setArmVisible(@Nullable GeoBone bone, boolean visible) {
         if (bone != null) {
             bone.setHidden(!visible);
         }
+    }
+
+    public static Vec3 getPartPosition(ModelPart part) {
+        var t = part.storePose();
+        return new Vec3(-t.x, t.y, t.z);
+    }
+
+    public static Vec3 getPartRotation(ModelPart part) {
+        var t = part.storePose();
+        return new Vec3(-t.xRot, -t.yRot, t.zRot);
+    }
+
+    private static void renderGeoBone(FursuitArmGeoRenderer formRenderer, GeoBone geoBone, PoseStack matrixStack, FursuitArmGeoAnimatable formAnimatable, MultiBufferSource vertexConsumerProvider, RenderType renderLayer, VertexConsumer vertexConsumer, int packedLight, float R, float G, float B, float A) {
+        FursuitArmGeoModel formModel = (FursuitArmGeoModel) formRenderer.getGeoModel();
+        BakedGeoModel bakedGeoModel = formModel.getBakedModel(formModel.getModelResource(formAnimatable));
+        float TickDelta = Minecraft.getInstance().getFrameTime();
+        int packedOverlay = formRenderer.getPackedOverlay(formAnimatable, 0.0F, Minecraft.getInstance().getFrameTime());
+        matrixStack.translate(-0.5, -0.51, -0.5); // 在 GeoObjectRenderer.preRender 中会 poseStack.translate(0.5, 0.51, 0.5) 因此需要手动调整
+        formRenderer.preRender(matrixStack, formAnimatable, bakedGeoModel, vertexConsumerProvider, vertexConsumerProvider.getBuffer(renderLayer), false, TickDelta, packedLight, packedOverlay, R, G, B, A);
+        if (formRenderer.firePreRenderEvent(matrixStack, bakedGeoModel, vertexConsumerProvider, TickDelta, packedLight)) {
+            formRenderer.preApplyRenderLayers(matrixStack, formAnimatable, bakedGeoModel, renderLayer, vertexConsumerProvider, vertexConsumer, (float)packedLight, packedLight, packedOverlay);
+            matrixStack.pushPose();
+            formRenderer.updateAnimatedTextureFrame(formAnimatable);
+            formRenderer.renderRecursively(matrixStack, formAnimatable, geoBone, renderLayer, vertexConsumerProvider, vertexConsumer, false, TickDelta, packedLight, packedOverlay, R, G, B, A);
+            matrixStack.popPose();
+            formRenderer.applyRenderLayers(matrixStack, formAnimatable, bakedGeoModel, renderLayer, vertexConsumerProvider, vertexConsumer, TickDelta, packedLight, packedOverlay);
+            formRenderer.postRender(matrixStack, formAnimatable, bakedGeoModel, vertexConsumerProvider, vertexConsumer, false, TickDelta, packedLight, packedOverlay, R, G, B, A);
+            formRenderer.firePostRenderEvent(matrixStack, bakedGeoModel, vertexConsumerProvider, TickDelta, packedLight);
+        }
+    }
+
+    public static void rFPM_PartB(PlayerRenderer playerEntityRenderer, PoseStack matrices, MultiBufferSource vertexConsumers, int light, AbstractClientPlayer player, ModelPart arm, ModelPart sleeve) {
+        boolean IsRenderRight = arm.equals(playerEntityRenderer.getModel().rightArm);
+        if (instance == null) {
+            instance = new FursuitArmGeoRenderer();
+        }
+        if (!(player instanceof LocalPlayer localPlayer)) return;
+        @Nullable GeoBone geoBone = null;
+        PlayerModel<AbstractClientPlayer> playerEntityModel = playerEntityRenderer.getModel();
+        FursuitArmGeoAnimatable formAnimatable = FursuitArmGeoAnimatable.getInstance();
+        FursuitArmGeoModel formModel = (FursuitArmGeoModel) FursuitArmGeoRenderer.instance.getGeoModel();
+        formAnimatable.setPlayer(localPlayer);
+        matrices.pushPose();
+        matrices.mulPose(new Quaternionf().rotateY(180 * Mth.DEG_TO_RAD));
+        matrices.mulPose(new Quaternionf().rotateX(180 * Mth.DEG_TO_RAD));
+        matrices.translate(0, -1.51f, 0);
+
+        BakedGeoModel bakedGeoModel = formModel.getBakedModel(formModel.getModelResource(formAnimatable));
+        String GeoBoneName = IsRenderRight ? "RightArm" : "LeftArm";
+        Optional<GeoBone> OptionalGeoBone = bakedGeoModel.getBone(GeoBoneName);
+        if (OptionalGeoBone.isPresent()) {
+            geoBone = OptionalGeoBone.get();
+        } else {
+            matrices.popPose();
+            formAnimatable.setPlayer(null);
+            return;
+        }
+
+        formModel.resetBone(GeoBoneName);
+        formModel.translatePositionForBone(GeoBoneName, getPartPosition(arm));
+        formModel.translatePositionForBone(GeoBoneName, new Vec3(5 * (IsRenderRight ? -1.0 : 1.0), -2, 0));
+        // 感觉有点偏下 额外做个补偿 看上去好像又不用了
+        // formModel.translatePositionForBone(GeoBoneName, new Vec3(0, -4, 0));
+        formModel.setRotationForBone(GeoBoneName, getPartRotation(arm));
+
+        RenderType renderLayerNormal = RenderType.entityTranslucent(formModel.getTextureResource(formAnimatable));
+        renderGeoBone(FursuitArmGeoRenderer.instance, geoBone, matrices, formAnimatable, vertexConsumers, renderLayerNormal, vertexConsumers.getBuffer(renderLayerNormal), light, 1.0f, 1.0f, 1.0f, 1.0f);
+        matrices.popPose();
+        formAnimatable.setPlayer(null);
     }
 }
